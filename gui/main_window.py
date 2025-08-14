@@ -22,7 +22,7 @@ from PyQt6.QtGui import QAction, QIcon, QKeySequence
 # 导入项目模块
 from config.settings import AppSettings
 from core.comtrade_reader import ComtradeReader
-# from analysis.feature_extractor import FeatureExtractor
+from analysis.feature_extractor import FeatureExtractor
 from analysis.fault_detector import FaultDetector, FaultDetectionConfig
 from models.data_models import ComtradeRecord, AnalysisResult, FaultEvent
 from gui.widgets.plot_widget import PlotWidget
@@ -184,7 +184,16 @@ class MainWindow(QMainWindow):
         # 设置定时器用于自动保存
         self.setup_auto_save()
 
+        # 连接信号
+        self.setup_signal_connections()
+
         logger.info("主窗口初始化完成")
+
+    def setup_signal_connections(self):
+        """设置信号连接"""
+        # 连接分析面板的信号
+        self.analysis_panel.fault_event_selected.connect(self.on_fault_event_selected)
+        self.analysis_panel.zoom_to_fault_requested.connect(self.on_zoom_to_fault)
 
     def init_ui(self):
         """初始化用户界面"""
@@ -251,7 +260,6 @@ class MainWindow(QMainWindow):
         # 日志标签页
         self.log_widget = QTextEdit()
         self.log_widget.setReadOnly(True)
-        #self.log_widget.setMaximumBlockCount(1000)  # 限制日志行数
         self.tab_widget.addTab(self.log_widget, "运行日志")
 
         self.main_splitter.addWidget(self.tab_widget)
@@ -616,6 +624,25 @@ class MainWindow(QMainWindow):
         if self.current_record:
             self.plot_widget.plot_channels(self.current_record, selected_channels)
 
+    def on_fault_event_selected(self, fault_event: FaultEvent):
+        """故障事件选中处理"""
+        logger.info(f"选中故障事件: {fault_event.fault_type.value} at {fault_event.start_time:.4f}s")
+
+        # 可以在这里添加更多处理逻辑，比如在波形图中高亮显示故障区域
+        if hasattr(self.plot_widget, 'highlight_fault_events'):
+            self.plot_widget.highlight_fault_events([fault_event])
+
+    def on_zoom_to_fault(self, fault_event: FaultEvent):
+        """缩放到故障事件"""
+        logger.info(f"缩放到故障事件: {fault_event.fault_type.value}")
+
+        # 切换到波形显示标签页
+        self.tab_widget.setCurrentIndex(0)
+
+        # 缩放到故障时间范围
+        if hasattr(self.plot_widget.canvas, 'zoom_to_fault_event'):
+            self.plot_widget.canvas.zoom_to_fault_event(fault_event)
+
     def on_splitter_moved(self):
         """分割器移动"""
         # 实时保存分割器比例
@@ -632,8 +659,20 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(self, "提示", "请先加载COMTRADE文件")
             return
 
-        dialog = ExportDialog(self.current_record, self)
-        dialog.exec()
+        # 简化的导出功能
+        file_path, _ = QFileDialog.getSaveFileName(
+            self,
+            "导出CSV文件",
+            "",
+            "CSV文件 (*.csv)"
+        )
+
+        if file_path:
+            success = self.comtrade_reader.export_to_csv(file_path)
+            if success:
+                QMessageBox.information(self, "导出成功", f"数据已导出到:\n{file_path}")
+            else:
+                QMessageBox.warning(self, "导出失败", "导出CSV文件失败")
 
     def export_plot(self):
         """导出图形"""
@@ -649,7 +688,11 @@ class MainWindow(QMainWindow):
         )
 
         if file_path:
-            self.plot_widget.save_plot(file_path)
+            try:
+                self.plot_widget.save_plot(file_path)
+                QMessageBox.information(self, "导出成功", f"图形已导出到:\n{file_path}")
+            except Exception as e:
+                QMessageBox.warning(self, "导出失败", f"导出图形失败:\n{str(e)}")
 
     def export_report(self):
         """导出分析报告"""
@@ -657,8 +700,24 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(self, "提示", "请先执行分析")
             return
 
-        # 生成和导出报告
-        QMessageBox.information(self, "功能开发中", "报告导出功能正在开发中...")
+        file_path, _ = QFileDialog.getSaveFileName(
+            self,
+            "导出分析报告",
+            "",
+            "文本文件 (*.txt);;HTML文件 (*.html)"
+        )
+
+        if file_path:
+            try:
+                # 生成报告内容
+                report_content = self.analysis_panel.export_analysis_report()
+
+                with open(file_path, 'w', encoding='utf-8') as f:
+                    f.write(report_content)
+
+                QMessageBox.information(self, "导出成功", f"分析报告已导出到:\n{file_path}")
+            except Exception as e:
+                QMessageBox.warning(self, "导出失败", f"导出报告失败:\n{str(e)}")
 
     def show_preferences(self):
         """显示首选项对话框"""
@@ -699,6 +758,7 @@ class MainWindow(QMainWindow):
         <h3>主要功能：</h3>
         <ul>
             <li>支持IEEE C37.111标准COMTRADE格式</li>
+            <li>智能编码检测和转换</li>
             <li>波形可视化和特征分析</li>
             <li>智能故障检测和分类</li>
             <li>谐波分析和电能质量评估</li>

@@ -34,3 +34,4 @@ sphinx-rtd-theme>=1.0.0   # ReadTheDocs主题
 # 打包工具
 pyinstaller>=4.10         # 可执行文件打包
 cx-Freeze>=6.10           # 可执行文件打包（替代选项）
+chardet>=5.2.0

@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-COMTRADE文件读取器
+COMTRADE文件读取器（修复编码问题）
 支持读取和解析IEEE C37.111标准的COMTRADE文件
 """
 
 import os
 import numpy as np
 import pandas as pd
+import chardet
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, List, Dict, Any, Tuple
@@ -47,6 +48,78 @@ class ComtradeReader:
         if not COMTRADE_AVAILABLE:
             logger.warning("comtrade库未安装，部分功能可能不可用")
 
+    def detect_file_encoding(self, file_path: str) -> str:
+        """
+        检测文件编码格式
+
+        Args:
+            file_path: 文件路径
+
+        Returns:
+            检测到的编码格式
+        """
+        try:
+            # 读取文件的前几KB来检测编码
+            with open(file_path, 'rb') as f:
+                raw_data = f.read(8192)  # 读取前8KB
+
+            # 使用chardet检测编码
+            result = chardet.detect(raw_data)
+            detected_encoding = result['encoding']
+            confidence = result['confidence']
+
+            logger.info(f"检测到文件编码: {detected_encoding} (置信度: {confidence:.2f})")
+
+            # 如果检测置信度太低，使用常见的中文编码
+            if confidence < 0.7:
+                # 尝试常见的中文编码
+                for encoding in ['gbk', 'gb2312', 'utf-8-sig', 'utf-8', 'latin-1']:
+                    try:
+                        with open(file_path, 'r', encoding=encoding) as f:
+                            f.read(1024)  # 尝试读取一部分
+                        logger.info(f"使用编码 {encoding} 成功读取文件")
+                        return encoding
+                    except UnicodeDecodeError:
+                        continue
+
+                # 如果都失败了，使用latin-1作为最后的选择
+                logger.warning("无法确定文件编码，使用latin-1")
+                return 'latin-1'
+
+            return detected_encoding or 'utf-8'
+
+        except Exception as e:
+            logger.warning(f"编码检测失败: {e}，使用默认编码gbk")
+            return 'gbk'
+
+    def convert_file_encoding(self, source_path: str, target_path: str,
+                              source_encoding: str, target_encoding: str = 'utf-8') -> bool:
+        """
+        转换文件编码格式
+
+        Args:
+            source_path: 源文件路径
+            target_path: 目标文件路径
+            source_encoding: 源编码格式
+            target_encoding: 目标编码格式
+
+        Returns:
+            转换是否成功
+        """
+        try:
+            with open(source_path, 'r', encoding=source_encoding) as source_file:
+                content = source_file.read()
+
+            with open(target_path, 'w', encoding=target_encoding) as target_file:
+                target_file.write(content)
+
+            logger.info(f"文件编码转换成功: {source_encoding} -> {target_encoding}")
+            return True
+
+        except Exception as e:
+            logger.error(f"文件编码转换失败: {e}")
+            return False
+
     def load_file(self, file_path: str) -> bool:
         """
         加载COMTRADE文件
@@ -66,24 +139,311 @@ class ComtradeReader:
             if not file_info:
                 return False
 
-            # 读取COMTRADE数据
-            logger.info(f"正在加载COMTRADE文件: {file_info.cfg_file}")
+            # 检测CFG文件编码
+            cfg_encoding = self.detect_file_encoding(file_info.cfg_file)
 
-            # 使用comtrade库读取
-            comtrade_data = comtrade.load(file_info.cfg_file)
+            # 如果不是UTF-8编码，创建临时的UTF-8版本
+            temp_cfg_file = file_info.cfg_file
+            temp_files_created = []
+
+            if cfg_encoding.lower() not in ['utf-8', 'utf-8-sig']:
+                temp_cfg_file = file_info.cfg_file + '.tmp_utf8'
+                if self.convert_file_encoding(file_info.cfg_file, temp_cfg_file,
+                                              cfg_encoding, 'utf-8'):
+                    temp_files_created.append(temp_cfg_file)
+                    logger.info(f"创建临时UTF-8文件: {temp_cfg_file}")
+                else:
+                    temp_cfg_file = file_info.cfg_file  # 转换失败，使用原文件
+
+            # 读取COMTRADE数据
+            logger.info(f"正在加载COMTRADE文件: {temp_cfg_file}")
+
+            try:
+                # 使用comtrade库读取
+                comtrade_data = comtrade.load(temp_cfg_file)
+
+                # 创建记录对象
+                self.current_record = self._create_record(comtrade_data, file_info)
+                self.file_info = file_info
+
+                logger.info(f"成功加载COMTRADE文件: {len(self.current_record.analog_channels)}个模拟通道, "
+                            f"{len(self.current_record.digital_channels)}个数字通道")
+
+                return True
+
+            except Exception as e:
+                # 如果使用临时文件失败，尝试直接使用原文件
+                if temp_cfg_file != file_info.cfg_file:
+                    logger.warning(f"使用临时文件失败: {e}，尝试直接读取原文件")
+                    comtrade_data = comtrade.load(file_info.cfg_file)
+                    self.current_record = self._create_record(comtrade_data, file_info)
+                    self.file_info = file_info
+                    return True
+                else:
+                    raise e
+
+            finally:
+                # 清理临时文件
+                for temp_file in temp_files_created:
+                    try:
+                        if os.path.exists(temp_file):
+                            os.remove(temp_file)
+                            logger.debug(f"删除临时文件: {temp_file}")
+                    except Exception as e:
+                        logger.warning(f"删除临时文件失败: {e}")
+
+        except Exception as e:
+            logger.error(f"加载COMTRADE文件失败: {e}")
+
+            # 如果是编码问题，尝试手动解析CFG文件
+            if "codec can't decode" in str(e) or "UnicodeDecodeError" in str(e):
+                logger.info("尝试手动解析CFG文件...")
+                return self._manual_parse_comtrade(file_path)
+
+            return False
+
+    def _manual_parse_comtrade(self, file_path: str) -> bool:
+        """
+        手动解析COMTRADE文件（处理编码问题）
+
+        Args:
+            file_path: 文件路径
+
+        Returns:
+            解析是否成功
+        """
+        try:
+            # 解析文件路径
+            file_info = self._parse_file_paths(file_path)
+            if not file_info:
+                return False
+
+            # 检测编码并读取CFG文件
+            cfg_encoding = self.detect_file_encoding(file_info.cfg_file)
+
+            logger.info(f"手动解析CFG文件，使用编码: {cfg_encoding}")
+
+            with open(file_info.cfg_file, 'r', encoding=cfg_encoding) as f:
+                cfg_lines = [line.strip() for line in f.readlines()]
+
+            # 解析CFG文件内容
+            cfg_data = self._parse_cfg_content(cfg_lines)
+
+            # 读取DAT文件
+            dat_data = self._read_dat_file(file_info.dat_file, cfg_data)
 
             # 创建记录对象
-            self.current_record = self._create_record(comtrade_data, file_info)
+            self.current_record = self._create_manual_record(cfg_data, dat_data, file_info)
             self.file_info = file_info
 
-            logger.info(f"成功加载COMTRADE文件: {len(self.current_record.analog_channels)}个模拟通道, "
+            logger.info(f"手动解析成功: {len(self.current_record.analog_channels)}个模拟通道, "
                         f"{len(self.current_record.digital_channels)}个数字通道")
 
             return True
 
         except Exception as e:
-            logger.error(f"加载COMTRADE文件失败: {e}")
+            logger.error(f"手动解析COMTRADE文件失败: {e}")
             return False
+
+    def _parse_cfg_content(self, cfg_lines: List[str]) -> Dict[str, Any]:
+        """
+        解析CFG文件内容
+
+        Args:
+            cfg_lines: CFG文件行列表
+
+        Returns:
+            解析后的配置数据
+        """
+        if len(cfg_lines) < 3:
+            raise ValueError("CFG文件格式不正确")
+
+        cfg_data = {}
+
+        # 第一行：站点名称和设备ID
+        line1_parts = cfg_lines[0].split(',')
+        cfg_data['station_name'] = line1_parts[0].strip() if len(line1_parts) > 0 else 'Unknown'
+        cfg_data['rec_dev_id'] = line1_parts[1].strip() if len(line1_parts) > 1 else 'Unknown'
+        cfg_data['rev_year'] = int(line1_parts[2]) if len(line1_parts) > 2 and line1_parts[
+            2].strip().isdigit() else 1999
+
+        # 第二行：通道数量
+        line2_parts = cfg_lines[1].split(',')
+        total_channels = int(line2_parts[0])
+        cfg_data['analog_count'] = int(line2_parts[1].rstrip('A'))
+        cfg_data['digital_count'] = int(line2_parts[2].rstrip('D')) if len(line2_parts) > 2 else 0
+
+        # 解析模拟通道
+        analog_channels = []
+        for i in range(2, 2 + cfg_data['analog_count']):
+            if i < len(cfg_lines):
+                channel_parts = cfg_lines[i].split(',')
+                if len(channel_parts) >= 6:
+                    analog_channels.append({
+                        'index': int(channel_parts[0]) - 1,  # 转换为0基索引
+                        'name': channel_parts[1].strip(),
+                        'phase': channel_parts[2].strip(),
+                        'unit': channel_parts[4].strip(),
+                        'multiplier': float(channel_parts[5]) if channel_parts[5].strip() else 1.0,
+                        'offset': float(channel_parts[6]) if len(channel_parts) > 6 and channel_parts[
+                            6].strip() else 0.0
+                    })
+
+        cfg_data['analog_channels'] = analog_channels
+
+        # 解析数字通道
+        digital_channels = []
+        start_idx = 2 + cfg_data['analog_count']
+        for i in range(start_idx, start_idx + cfg_data['digital_count']):
+            if i < len(cfg_lines):
+                channel_parts = cfg_lines[i].split(',')
+                if len(channel_parts) >= 2:
+                    digital_channels.append({
+                        'index': int(channel_parts[0]) - 1,  # 转换为0基索引
+                        'name': channel_parts[1].strip(),
+                        'phase': channel_parts[2].strip() if len(channel_parts) > 2 else ''
+                    })
+
+        cfg_data['digital_channels'] = digital_channels
+
+        # 解析其他参数
+        freq_line_idx = 2 + cfg_data['analog_count'] + cfg_data['digital_count']
+        if freq_line_idx < len(cfg_lines):
+            cfg_data['frequency'] = float(cfg_lines[freq_line_idx]) if cfg_lines[freq_line_idx].strip() else 50.0
+        else:
+            cfg_data['frequency'] = 50.0
+
+        # 采样率信息
+        sample_rate_idx = freq_line_idx + 1
+        if sample_rate_idx < len(cfg_lines):
+            sample_parts = cfg_lines[sample_rate_idx].split(',')
+            cfg_data['sample_rates'] = [(int(sample_parts[0]), int(sample_parts[1]))] if len(sample_parts) >= 2 else [
+                (1, 1)]
+        else:
+            cfg_data['sample_rates'] = [(1, 1)]
+
+        return cfg_data
+
+    def _read_dat_file(self, dat_file: str, cfg_data: Dict[str, Any]) -> np.ndarray:
+        """
+        读取DAT文件数据
+
+        Args:
+            dat_file: DAT文件路径
+            cfg_data: CFG配置数据
+
+        Returns:
+            数据数组
+        """
+        try:
+            # 尝试以二进制格式读取
+            data = np.fromfile(dat_file, dtype=np.int16)
+
+            # 计算每行的数据点数
+            total_channels = cfg_data['analog_count'] + cfg_data['digital_count'] + 2  # +2 为采样序号和时间戳
+
+            if len(data) % total_channels == 0:
+                # 重整数据形状
+                num_samples = len(data) // total_channels
+                data = data.reshape(num_samples, total_channels)
+
+                logger.info(f"成功读取DAT文件: {num_samples}个采样点, {total_channels}列数据")
+                return data
+            else:
+                logger.warning("DAT文件数据长度与通道数不匹配，尝试CSV格式读取")
+
+        except Exception as e:
+            logger.warning(f"二进制读取DAT文件失败: {e}，尝试文本格式")
+
+        # 尝试以文本格式读取
+        try:
+            # 检测DAT文件编码
+            dat_encoding = self.detect_file_encoding(dat_file)
+
+            # 读取为CSV格式
+            data = pd.read_csv(dat_file, header=None, encoding=dat_encoding)
+            logger.info(f"以文本格式读取DAT文件: {data.shape}")
+            return data.values
+
+        except Exception as e:
+            logger.error(f"读取DAT文件失败: {e}")
+            raise
+
+    def _create_manual_record(self, cfg_data: Dict[str, Any], dat_data: np.ndarray,
+                              file_info: FileInfo) -> ComtradeRecord:
+        """
+        从手动解析的数据创建记录对象
+
+        Args:
+            cfg_data: CFG配置数据
+            dat_data: DAT数据
+            file_info: 文件信息
+
+        Returns:
+            COMTRADE记录对象
+        """
+        # 提取时间轴（通常在第二列）
+        if dat_data.shape[1] > 1:
+            time_axis = dat_data[:, 1].astype(float) / 1000000.0  # 微秒转秒
+        else:
+            # 如果没有时间列，根据采样率生成
+            sample_rate = cfg_data['sample_rates'][0][0] if cfg_data['sample_rates'] else 1
+            time_axis = np.arange(len(dat_data)) / sample_rate
+
+        # 创建模拟通道
+        analog_channels = []
+        data_col_offset = 2  # 跳过序号和时间戳列
+
+        for i, ch_config in enumerate(cfg_data['analog_channels']):
+            if data_col_offset + i < dat_data.shape[1]:
+                raw_data = dat_data[:, data_col_offset + i].astype(float)
+                # 应用缩放和偏移
+                scaled_data = raw_data * ch_config['multiplier'] + ch_config['offset']
+
+                channel = ChannelInfo(
+                    index=ch_config['index'],
+                    name=ch_config['name'],
+                    phase=ch_config['phase'],
+                    unit=ch_config['unit'],
+                    multiplier=ch_config['multiplier'],
+                    offset=ch_config['offset'],
+                    data=scaled_data
+                )
+                analog_channels.append(channel)
+
+        # 创建数字通道
+        digital_channels = []
+        digital_col_offset = data_col_offset + len(cfg_data['analog_channels'])
+
+        for i, ch_config in enumerate(cfg_data['digital_channels']):
+            if digital_col_offset + i < dat_data.shape[1]:
+                digital_data = dat_data[:, digital_col_offset + i].astype(bool)
+
+                channel = ChannelInfo(
+                    index=ch_config['index'],
+                    name=ch_config['name'],
+                    phase=ch_config['phase'],
+                    unit='',
+                    data=digital_data
+                )
+                digital_channels.append(channel)
+
+        # 创建记录对象
+        record = ComtradeRecord(
+            station_name=cfg_data['station_name'],
+            rec_dev_id=cfg_data['rec_dev_id'],
+            rev_year=cfg_data['rev_year'],
+            start_timestamp=None,  # 手动解析时暂时不提取时间戳
+            trigger_timestamp=None,
+            sample_rates=cfg_data['sample_rates'],
+            frequency=cfg_data['frequency'],
+            time_axis=time_axis,
+            analog_channels=analog_channels,
+            digital_channels=digital_channels,
+            file_info=file_info
+        )
+
+        return record
 
     def _parse_file_paths(self, file_path: str) -> Optional[FileInfo]:
         """解析文件路径，找到所有相关文件"""
