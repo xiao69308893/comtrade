@@ -9,6 +9,7 @@ import os
 import sys
 from pathlib import Path
 from typing import Optional, List
+from datetime import datetime
 
 from PyQt6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QSplitter,
@@ -27,7 +28,8 @@ from analysis.fault_detector import FaultDetector, FaultDetectionConfig
 from models.data_models import ComtradeRecord, AnalysisResult, FaultEvent
 from gui.widgets.plot_widget import PlotWidget
 from gui.widgets.channel_tree import ChannelTreeWidget
-from gui.widgets.info_panel import InfoPanel
+from gui.widgets.info_panel import InfoPanel, InfoDisplayWidget, DataPreviewWidget, ChannelStatisticsWidget
+from gui.widgets.collapsible_widget import CollapsibleSection, CollapsibleContainer
 from gui.widgets.analysis_panel import AnalysisPanel
 from gui.widgets.toolbar import load_icon
 from gui.dialogs.preferences import PreferencesDialog
@@ -229,21 +231,36 @@ class MainWindow(QMainWindow):
         """创建左侧控制面板"""
         left_widget = QWidget()
         left_layout = QVBoxLayout(left_widget)
+        left_layout.setContentsMargins(5, 5, 5, 5)
+        left_layout.setSpacing(5)
 
         # 通道选择树
         self.channel_tree = ChannelTreeWidget()
         self.channel_tree.channels_selected.connect(self.on_channels_selected)
         left_layout.addWidget(self.channel_tree)
 
-        # 信息面板
-        self.info_panel = InfoPanel()
-        left_layout.addWidget(self.info_panel)
+        # 创建可折叠的信息面板
+        self.create_collapsible_info_panels(left_layout)
 
-        # 设置布局比例
-        left_layout.setStretchFactor(self.channel_tree, 3)
-        left_layout.setStretchFactor(self.info_panel, 2)
+        # 设置通道树的拉伸因子，让它占据主要空间
+        left_layout.setStretchFactor(self.channel_tree, 1)
 
         self.main_splitter.addWidget(left_widget)
+
+    def create_collapsible_info_panels(self, parent_layout):
+        """创建可折叠的信息面板"""
+        # 创建原来的InfoPanel作为内容
+        self.info_panel = InfoPanel()
+        
+        # 创建可折叠区域，将InfoPanel作为内容
+        info_section = CollapsibleSection("信息面板", "", False)
+        info_section.set_content_widget(self.info_panel)
+        
+        parent_layout.addWidget(info_section)
+        
+
+
+
 
     def create_right_panel(self):
         """创建右侧面板"""
