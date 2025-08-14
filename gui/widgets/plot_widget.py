@@ -28,12 +28,30 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
+# 导入字体配置
+try:
+    from utils.font_config import create_safe_text, init_font_config
+    FONT_CONFIG_AVAILABLE = True
+except ImportError:
+    FONT_CONFIG_AVAILABLE = False
+    def create_safe_text(text): return text
+    def init_font_config(): pass
+
 
 class PlotCanvas(FigureCanvas):
     """绘图画布"""
 
     def __init__(self, settings: PlotSettings):
         self.settings = settings
+
+        # 初始化字体配置
+        if FONT_CONFIG_AVAILABLE:
+            try:
+                init_font_config()
+            except Exception as e:
+                logger.warning(f"字体配置失败: {e}")
+
+
         self.figure = Figure(figsize=(12, 8), dpi=settings.figure_dpi)
         super().__init__(self.figure)
 
@@ -51,6 +69,58 @@ class PlotCanvas(FigureCanvas):
         self.mpl_connect('button_press_event', self.on_mouse_press)
         self.mpl_connect('motion_notify_event', self.on_mouse_move)
 
+    def _setup_matplotlib_font(self):
+        """强制设置matplotlib中文字体"""
+        try:
+            import matplotlib.font_manager as fm
+            from pathlib import Path
+            
+            # 获取自定义字体路径
+            current_dir = Path(__file__).parent.parent.parent
+            assets_fonts_dir = current_dir / 'assets' / 'fonts'
+            
+            # 优先使用的字体文件和对应的字体名称
+            priority_fonts = [
+                ('MicrosoftYaHeiBold.ttc', 'Microsoft YaHei'),
+                ('MicrosoftYaHeiNormal.ttc', 'Microsoft YaHei'),
+                ('STHeitiMedium.ttc', 'STHeiti')
+            ]
+            
+            font_set = False
+            for font_file, font_name in priority_fonts:
+                font_path = assets_fonts_dir / font_file
+                if font_path.exists():
+                    try:
+                        # 添加字体到matplotlib字体管理器
+                        fm.fontManager.addfont(str(font_path))
+                        
+                        # 获取字体属性
+                        font_prop = fm.FontProperties(fname=str(font_path))
+                        actual_font_name = font_prop.get_name()
+                        
+                        # 设置matplotlib字体
+                        plt.rcParams['font.sans-serif'] = [actual_font_name, font_name, 'Microsoft YaHei', 'SimHei']
+                        plt.rcParams['axes.unicode_minus'] = False
+                        
+                        # 强制刷新字体缓存
+                        plt.rcParams.update(plt.rcParams)
+                        
+                        logger.info(f"强制设置matplotlib字体: {actual_font_name} (文件: {font_file})")
+                        font_set = True
+                        break
+                    except Exception as e:
+                        logger.warning(f"设置字体 {font_file} 失败: {e}")
+                        continue
+            
+            if not font_set:
+                # 回退到系统字体
+                plt.rcParams['font.sans-serif'] = ['Microsoft YaHei', 'SimHei', 'DejaVu Sans']
+                plt.rcParams['axes.unicode_minus'] = False
+                logger.warning("使用系统默认中文字体")
+                
+        except Exception as e:
+            logger.error(f"设置matplotlib字体失败: {e}")
+
     def clear_plots(self):
         """清除所有图形"""
         self.figure.clear()
@@ -65,6 +135,9 @@ class PlotCanvas(FigureCanvas):
             record: COMTRADE记录
             selected_channels: 选中的通道 {'analog': [0, 1, 2], 'digital': [0, 1]}
         """
+        # 强制重新设置matplotlib中文字体
+        self._setup_matplotlib_font()
+        
         self.current_record = record
         self.selected_channels = selected_channels
 
@@ -92,8 +165,10 @@ class PlotCanvas(FigureCanvas):
             self._plot_digital_channels(record, digital_indices, total_subplots, n_analog)
 
         # 设置整体标题
-        self.figure.suptitle(f'COMTRADE波形数据 - {record.station_name}',
-                             fontsize=14, fontweight='bold')
+        title = f'COMTRADE{create_safe_text("波形数据")} - {record.station_name}'
+        self.figure.suptitle(title, fontsize=14, fontweight='bold')
+
+
 
         # 调整布局
         self.figure.tight_layout()
@@ -135,6 +210,7 @@ class PlotCanvas(FigureCanvas):
             # 设置轴标签
             ax.set_ylabel(f"{channel.name}\n({channel.unit})", fontsize=10)
 
+
             # 网格
             if self.settings.grid_enabled:
                 ax.grid(True, alpha=self.settings.grid_alpha)
@@ -148,7 +224,7 @@ class PlotCanvas(FigureCanvas):
 
             # 只在最后一个子图显示x轴标签
             if subplot_idx == total_subplots:
-                ax.set_xlabel('时间 (s)', fontsize=10)
+                ax.set_xlabel(create_safe_text('时间') + ' (s)', fontsize=10)
             else:
                 ax.set_xticklabels([])
 
@@ -181,9 +257,9 @@ class PlotCanvas(FigureCanvas):
 
             y_offset += 1.2
 
-        ax.set_ylabel('数字状态', fontsize=10)
-        ax.set_xlabel('时间 (s)', fontsize=10)
-        ax.set_title('数字通道状态', fontsize=11, fontweight='bold')
+        ax.set_ylabel(create_safe_text('数字状态'), fontsize=10)
+        ax.set_xlabel(create_safe_text('时间') + ' (s)', fontsize=10)
+        ax.set_title(create_safe_text('数字通道状态'), fontsize=11, fontweight='bold')
 
         if self.settings.grid_enabled:
             ax.grid(True, alpha=self.settings.grid_alpha)

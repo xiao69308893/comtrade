@@ -8,16 +8,59 @@
 from PyQt6.QtWidgets import (
     QToolBar, QWidget, QHBoxLayout, QVBoxLayout, QPushButton,
     QLabel, QComboBox, QSpinBox, QDoubleSpinBox, QCheckBox,
-    QButtonGroup, QFrame, QSeparator, QSizePolicy
+    QButtonGroup, QFrame, QSizePolicy
 )
 from PyQt6.QtCore import Qt, pyqtSignal, QSize
 from PyQt6.QtGui import QAction, QIcon, QPixmap, QPainter, QColor
 
 from typing import Optional, Dict, Any
+from pathlib import Path
 from config.constants import SHORTCUTS, TOOLTIPS
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
+
+
+def load_icon(icon_name: str, size: QSize = QSize(16, 16)) -> QIcon:
+    """加载图标文件"""
+    try:
+        # 获取项目根目录
+        current_dir = Path(__file__).parent.parent.parent
+        icons_dir = current_dir / 'assets' / 'icons'
+        
+        # 支持的图标文件扩展名
+        icon_extensions = ['.png', '.svg', '.ico', '.jpg', '.jpeg']
+        
+        for ext in icon_extensions:
+            icon_path = icons_dir / f"{icon_name}{ext}"
+            if icon_path.exists():
+                icon = QIcon(str(icon_path))
+                if not icon.isNull():
+                    logger.debug(f"成功加载图标: {icon_path}")
+                    return icon
+        
+        # 如果没找到图标文件，创建一个默认图标
+        logger.warning(f"未找到图标文件: {icon_name}")
+        return create_default_icon(size)
+        
+    except Exception as e:
+        logger.error(f"加载图标失败: {e}")
+        return create_default_icon(size)
+
+
+def create_default_icon(size: QSize = QSize(16, 16)) -> QIcon:
+    """创建默认图标"""
+    pixmap = QPixmap(size)
+    pixmap.fill(QColor('#CCCCCC'))
+    
+    painter = QPainter(pixmap)
+    painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+    painter.setPen(QColor('#666666'))
+    painter.setBrush(QColor('#EEEEEE'))
+    painter.drawRect(2, 2, size.width()-4, size.height()-4)
+    painter.end()
+    
+    return QIcon(pixmap)
 
 
 class ToolbarSeparator(QFrame):
@@ -39,6 +82,12 @@ class ToolButton(QPushButton):
         self.setToolTip(tooltip)
         self.setMinimumSize(80, 32)
         self.setMaximumSize(120, 32)
+        
+        # 设置图标
+        if icon_name:
+            icon = load_icon(icon_name, QSize(16, 16))
+            self.setIcon(icon)
+            self.setIconSize(QSize(16, 16))
 
         # 设置样式
         self.setStyleSheet("""
@@ -48,6 +97,7 @@ class ToolButton(QPushButton):
                 border-radius: 4px;
                 padding: 4px 8px;
                 font-size: 11px;
+                text-align: left;
             }
             QPushButton:hover {
                 background-color: #e0e0e0;
@@ -136,7 +186,7 @@ class FileToolbar(QToolBar):
     def init_toolbar(self):
         """初始化工具栏"""
         # 打开文件
-        self.open_btn = ToolButton("打开", "folder-open", TOOLTIPS.get('open_file', '打开COMTRADE文件'))
+        self.open_btn = ToolButton("打开", "open", TOOLTIPS.get('open_file', '打开COMTRADE文件'))
         self.open_btn.clicked.connect(self.open_file_requested.emit)
         self.addWidget(self.open_btn)
 
@@ -204,13 +254,13 @@ class AnalysisToolbar(QToolBar):
     def init_toolbar(self):
         """初始化工具栏"""
         # 开始分析
-        self.start_btn = ToolButton("开始分析", "play", TOOLTIPS.get('start_analysis', '开始分析'))
+        self.start_btn = ToolButton("开始分析", "analyze", TOOLTIPS.get('start_analysis', '开始分析'))
         self.start_btn.clicked.connect(self.start_analysis_requested.emit)
         self.start_btn.setEnabled(False)
         self.addWidget(self.start_btn)
 
         # 停止分析
-        self.stop_btn = ToolButton("停止", "stop", TOOLTIPS.get('stop_analysis', '停止分析'))
+        self.stop_btn = ToolButton("停止", "back", TOOLTIPS.get('stop_analysis', '停止分析'))
         self.stop_btn.clicked.connect(self.stop_analysis_requested.emit)
         self.stop_btn.setEnabled(False)
         self.addWidget(self.stop_btn)

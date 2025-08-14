@@ -10,8 +10,9 @@ from datetime import datetime
 from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
+from utils.logger import get_logger
 
-
+logger = get_logger(__name__)
 class ChannelType(Enum):
     """通道类型枚举"""
     ANALOG = "analog"
@@ -63,18 +64,77 @@ class ChannelInfo:
         """获取按比例缩放的数据"""
         return self.data * self.multiplier + self.offset
 
+    # 修复 models/data_models.py 中的RMS计算问题
+
     @property
     def rms_value(self) -> float:
-        """计算RMS值（仅适用于模拟通道）"""
+        """计算RMS值（仅适用于模拟通道）- 防止溢出版本"""
         if self.channel_type == ChannelType.ANALOG and len(self.data) > 0:
-            return float(np.sqrt(np.mean(self.scaled_data ** 2)))
+            try:
+                # 清理数据，移除无效值
+                clean_data = np.nan_to_num(self.scaled_data, nan=0.0, posinf=0.0, neginf=0.0)
+
+                # 检查数据范围，防止平方后溢出
+                max_abs_val = np.max(np.abs(clean_data))
+                if max_abs_val > 1e6:  # 如果数值太大，先进行缩放
+                    scale_factor = 1e6 / max_abs_val
+                    clean_data = clean_data * scale_factor
+                    need_scale_back = True
+                else:
+                    need_scale_back = False
+                    scale_factor = 1.0
+
+                # 使用安全的方式计算RMS
+                with np.errstate(over='ignore', invalid='ignore'):
+                    squared_data = clean_data ** 2
+
+                # 检查平方后的数据
+                squared_data = np.nan_to_num(squared_data, nan=0.0, posinf=0.0, neginf=0.0)
+
+                # 计算平均值
+                mean_squared = np.mean(squared_data)
+
+                # 计算RMS
+                if mean_squared >= 0:
+                    rms = np.sqrt(mean_squared)
+
+                    # 如果之前进行了缩放，需要还原
+                    if need_scale_back:
+                        rms = rms / scale_factor
+
+                    # 检查结果的有效性
+                    if not np.isfinite(rms):
+                        logger.warning(f"通道RMS计算结果无效，返回0")
+                        return 0.0
+
+                    return float(rms)
+                else:
+                    return 0.0
+
+            except Exception as e:
+                logger.warning(f"RMS计算失败: {e}")
+                return 0.0
         return 0.0
 
     @property
     def peak_value(self) -> float:
-        """计算峰值（仅适用于模拟通道）"""
+        """计算峰值（仅适用于模拟通道）- 防止溢出版本"""
         if self.channel_type == ChannelType.ANALOG and len(self.data) > 0:
-            return float(np.max(np.abs(self.scaled_data)))
+            try:
+                # 清理数据
+                clean_data = np.nan_to_num(self.scaled_data, nan=0.0, posinf=0.0, neginf=0.0)
+
+                # 计算峰值
+                peak = np.max(np.abs(clean_data))
+
+                # 检查结果的有效性
+                if not np.isfinite(peak):
+                    return 0.0
+
+                return float(peak)
+            except Exception as e:
+                logger.warning(f"峰值计算失败: {e}")
+                return 0.0
         return 0.0
 
 

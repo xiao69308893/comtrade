@@ -29,6 +29,7 @@ from gui.widgets.plot_widget import PlotWidget
 from gui.widgets.channel_tree import ChannelTreeWidget
 from gui.widgets.info_panel import InfoPanel
 from gui.widgets.analysis_panel import AnalysisPanel
+from gui.widgets.toolbar import load_icon
 from gui.dialogs.preferences import PreferencesDialog
 from gui.dialogs.export_dialog import ExportDialog
 from utils.logger import get_logger, PerformanceLogger, get_performance_logger
@@ -273,6 +274,7 @@ class MainWindow(QMainWindow):
 
         # 打开文件
         open_action = QAction('打开COMTRADE文件(&O)...', self)
+        open_action.setIcon(load_icon('open'))
         open_action.setShortcut(QKeySequence.StandardKey.Open)
         open_action.setStatusTip('打开COMTRADE文件')
         open_action.triggered.connect(self.open_file)
@@ -288,14 +290,17 @@ class MainWindow(QMainWindow):
         export_menu = file_menu.addMenu('导出(&E)')
 
         export_csv_action = QAction('导出为CSV...', self)
+        export_csv_action.setIcon(load_icon('export'))
         export_csv_action.triggered.connect(self.export_csv)
         export_menu.addAction(export_csv_action)
 
         export_plot_action = QAction('导出图形...', self)
+        export_plot_action.setIcon(load_icon('export'))
         export_plot_action.triggered.connect(self.export_plot)
         export_menu.addAction(export_plot_action)
 
         export_report_action = QAction('导出分析报告...', self)
+        export_report_action.setIcon(load_icon('report'))
         export_report_action.triggered.connect(self.export_report)
         export_menu.addAction(export_report_action)
 
@@ -311,12 +316,14 @@ class MainWindow(QMainWindow):
         analysis_menu = menubar.addMenu('分析(&A)')
 
         self.start_analysis_action = QAction('开始分析(&S)', self)
+        self.start_analysis_action.setIcon(load_icon('analyze'))
         self.start_analysis_action.setShortcut('F5')
         self.start_analysis_action.triggered.connect(self.start_analysis)
         self.start_analysis_action.setEnabled(False)
         analysis_menu.addAction(self.start_analysis_action)
 
         self.stop_analysis_action = QAction('停止分析(&T)', self)
+        self.stop_analysis_action.setIcon(load_icon('back'))
         self.stop_analysis_action.triggered.connect(self.stop_analysis)
         self.stop_analysis_action.setEnabled(False)
         analysis_menu.addAction(self.stop_analysis_action)
@@ -324,6 +331,7 @@ class MainWindow(QMainWindow):
         analysis_menu.addSeparator()
 
         config_analysis_action = QAction('分析配置(&C)...', self)
+        config_analysis_action.setIcon(load_icon('settings'))
         config_analysis_action.triggered.connect(self.configure_analysis)
         analysis_menu.addAction(config_analysis_action)
 
@@ -356,6 +364,7 @@ class MainWindow(QMainWindow):
         tools_menu = menubar.addMenu('工具(&T)')
 
         preferences_action = QAction('首选项(&P)...', self)
+        preferences_action.setIcon(load_icon('settings'))
         preferences_action.triggered.connect(self.show_preferences)
         tools_menu.addAction(preferences_action)
 
@@ -363,6 +372,7 @@ class MainWindow(QMainWindow):
         help_menu = menubar.addMenu('帮助(&H)')
 
         about_action = QAction('关于(&A)...', self)
+        about_action.setIcon(load_icon('app'))
         about_action.triggered.connect(self.show_about)
         help_menu.addAction(about_action)
 
@@ -374,6 +384,7 @@ class MainWindow(QMainWindow):
 
         # 打开文件
         open_action = QAction('打开', self)
+        open_action.setIcon(load_icon('open'))
         open_action.setStatusTip('打开COMTRADE文件')
         open_action.triggered.connect(self.open_file)
         self.tool_bar.addAction(open_action)
@@ -382,11 +393,13 @@ class MainWindow(QMainWindow):
 
         # 分析控制
         self.start_analysis_tool_action = QAction('开始分析', self)
+        self.start_analysis_tool_action.setIcon(load_icon('analyze'))
         self.start_analysis_tool_action.triggered.connect(self.start_analysis)
         self.start_analysis_tool_action.setEnabled(False)
         self.tool_bar.addAction(self.start_analysis_tool_action)
 
         self.stop_analysis_tool_action = QAction('停止分析', self)
+        self.stop_analysis_tool_action.setIcon(load_icon('back'))
         self.stop_analysis_tool_action.triggered.connect(self.stop_analysis)
         self.stop_analysis_tool_action.setEnabled(False)
         self.tool_bar.addAction(self.stop_analysis_tool_action)
@@ -395,6 +408,7 @@ class MainWindow(QMainWindow):
 
         # 导出
         export_action = QAction('导出', self)
+        export_action.setIcon(load_icon('export'))
         export_action.triggered.connect(self.export_csv)
         self.tool_bar.addAction(export_action)
 

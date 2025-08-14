@@ -911,9 +911,10 @@ class ComtradeReader:
             sample_rate = cfg_data.get('sample_rates', [(1000, 1)])[0][0]
             return np.arange(len(dat_data)) / sample_rate
 
+    # 修复 core/comtrade_reader.py 中的数据处理问题
     def _create_analog_channels(self, cfg_data: Dict[str, Any], dat_data: np.ndarray,
                                 time_axis: np.ndarray) -> List[ChannelInfo]:
-        """创建模拟通道"""
+        """创建模拟通道（修复版本）"""
         analog_channels = []
         data_col_offset = 2  # 跳过序号和时间戳列
 
@@ -924,10 +925,43 @@ class ComtradeReader:
                     # 提取原始数据
                     raw_data = dat_data[:, data_col_index].astype(float)
 
-                    # 应用缩放和偏移
+                    # 检查原始数据的有效性
+                    if not np.isfinite(raw_data).any():
+                        logger.warning(f"通道 {ch_config['name']} 包含无效数据，使用零值")
+                        raw_data = np.zeros_like(raw_data)
+
+                    # 清理异常值
+                    raw_data = np.nan_to_num(raw_data, nan=0.0, posinf=0.0, neginf=0.0)
+
+                    # 获取缩放参数并验证
                     multiplier = ch_config.get('multiplier', 1.0)
                     offset = ch_config.get('offset', 0.0)
-                    scaled_data = raw_data * multiplier + offset
+
+                    # 验证缩放参数的有效性
+                    if not np.isfinite(multiplier) or multiplier == 0:
+                        logger.warning(f"通道 {ch_config['name']} 缩放系数无效: {multiplier}，使用默认值1.0")
+                        multiplier = 1.0
+
+                    if not np.isfinite(offset):
+                        logger.warning(f"通道 {ch_config['name']} 偏移量无效: {offset}，使用默认值0.0")
+                        offset = 0.0
+
+                    # 检查缩放后是否会溢出
+                    test_val = np.max(np.abs(raw_data)) * abs(multiplier) + abs(offset)
+                    if test_val > 1e15:  # 防止溢出
+                        logger.warning(f"通道 {ch_config['name']} 缩放后数值过大，调整缩放系数")
+                        multiplier = multiplier / (test_val / 1e6)  # 调整到合理范围
+
+                    # 应用缩放和偏移
+                    with np.errstate(invalid='ignore', over='ignore'):
+                        scaled_data = raw_data * multiplier + offset
+
+                    # 再次清理结果
+                    scaled_data = np.nan_to_num(scaled_data, nan=0.0, posinf=0.0, neginf=0.0)
+
+                    # 限制数据范围，防止后续计算溢出
+                    max_reasonable = 1e12  # 设置合理的最大值
+                    scaled_data = np.clip(scaled_data, -max_reasonable, max_reasonable)
 
                     channel = ChannelInfo(
                         index=ch_config['index'],
@@ -943,12 +977,27 @@ class ComtradeReader:
                         data=scaled_data
                     )
                     analog_channels.append(channel)
-                    logger.debug(f"创建模拟通道: {channel.name}, 数据点数={len(scaled_data)}")
+                    logger.debug(f"创建模拟通道: {channel.name}, 数据点数={len(scaled_data)}, "
+                                 f"范围=[{np.min(scaled_data):.3f}, {np.max(scaled_data):.3f}]")
                 else:
                     logger.warning(f"模拟通道 {ch_config['name']} 数据列不存在")
 
             except Exception as e:
                 logger.warning(f"创建模拟通道 {ch_config.get('name', 'Unknown')} 失败: {e}")
+                # 创建一个空的通道作为占位符
+                try:
+                    channel = ChannelInfo(
+                        index=ch_config['index'],
+                        name=ch_config['name'],
+                        phase=ch_config.get('phase', ''),
+                        unit=ch_config.get('unit', ''),
+                        multiplier=1.0,
+                        offset=0.0,
+                        data=np.zeros(len(time_axis))
+                    )
+                    analog_channels.append(channel)
+                except:
+                    pass
 
         return analog_channels
 
