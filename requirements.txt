@@ -1,0 +1,36 @@
+# COMTRADE波形分析器依赖库
+# Python 3.10+ 环境
+
+# 核心界面库
+PyQt6>=6.4.0
+PyQt6-Qt6>=6.4.0
+
+# 数据处理和科学计算
+numpy>=1.21.0
+pandas>=1.3.0
+scipy>=1.7.0
+
+# 绘图库
+matplotlib>=3.5.0
+
+# COMTRADE文件处理
+comtrade>=0.0.9
+
+# 可选依赖 - 增强功能
+psutil>=5.8.0              # 系统监控
+openpyxl>=3.0.0           # Excel文件读写
+xlsxwriter>=3.0.0         # Excel文件写入
+
+# 开发和测试依赖
+pytest>=6.0.0             # 单元测试
+pytest-qt>=4.0.0          # PyQt测试
+black>=22.0.0             # 代码格式化
+flake8>=4.0.0             # 代码检查
+
+# 文档生成
+sphinx>=4.0.0             # 文档生成
+sphinx-rtd-theme>=1.0.0   # ReadTheDocs主题
+
+# 打包工具
+pyinstaller>=4.10         # 可执行文件打包
+cx-Freeze>=6.10           # 可执行文件打包（替代选项）
