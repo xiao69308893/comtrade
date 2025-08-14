@@ -1,0 +1,1311 @@
+[Public Record_Information]
+Source=中元华电 ZH-5,ZYHDINF_V2,ZYHD050002855500
+Record_Information=V2.20,192.168.0.206,,,,
+
+[Public File_Description]
+Station_Name=华中科技大学动模实验室
+Recording_Device_ID=28555#录波装置
+Revision_Year=1999
+Total_Channel_Count=97
+Analog_Channel_Count=65
+Status_Channel_Count=32
+Line_Frequency=50
+Sample_Rate_Count=1
+Sample_Rate_#1=2000
+End_Sample_Rate_#1=10437
+File_Start_Time=27/04/2024,05:49:22.244400
+Trigger_Time=27/04/2024,05:49:24.244400
+File_Type=BINARY
+Time_Multiplier=1
+
+[Public Analog_Channel_#1]
+Channel_ID=10kV母线电压 Ua
+Phase_ID=A
+Monitored_Component=10kV母线电压
+Channel_Units=V
+Channel_Multiplier=0.007768204289949
+Channel_Offset=-0.015536408579899
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#2]
+Channel_ID=10kV母线电压 Ub
+Phase_ID=B
+Monitored_Component=10kV母线电压
+Channel_Units=V
+Channel_Multiplier=0.007764444412404
+Channel_Offset=0.031057777649615
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#3]
+Channel_ID=10kV母线电压 Uc
+Phase_ID=C
+Monitored_Component=10kV母线电压
+Channel_Units=V
+Channel_Multiplier=0.007766976773279
+Channel_Offset=0.007766976773279
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#4]
+Channel_ID=10kV母线电压 3Uo
+Phase_ID=N
+Monitored_Component=10kV母线电压
+Channel_Units=V
+Channel_Multiplier=0.007765174625077
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#5]
+Channel_ID=QF2开关电压 Ua
+Phase_ID=A
+Monitored_Component=QF2开关电压
+Channel_Units=V
+Channel_Multiplier=0.007767404158374
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#6]
+Channel_ID=QF2开关电压 Ub
+Phase_ID=B
+Monitored_Component=QF2开关电压
+Channel_Units=V
+Channel_Multiplier=0.007765189905366
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#7]
+Channel_ID=QF2开关电压 Uc
+Phase_ID=C
+Monitored_Component=QF2开关电压
+Channel_Units=V
+Channel_Multiplier=0.007767520381191
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#8]
+Channel_ID=QF2开关电压 3Uo
+Phase_ID=N
+Monitored_Component=QF2开关电压
+Channel_Units=V
+Channel_Multiplier=0.007766798040182
+Channel_Offset=0.007766798040182
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#9]
+Channel_ID=QF3开关电压 Ua
+Phase_ID=A
+Monitored_Component=QF3开关电压
+Channel_Units=V
+Channel_Multiplier=0.007764933381702
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#10]
+Channel_ID=QF3开关电压 Ub
+Phase_ID=B
+Monitored_Component=QF3开关电压
+Channel_Units=V
+Channel_Multiplier=0.007763713736688
+Channel_Offset=0.007763713736688
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#11]
+Channel_ID=QF3开关电压 Uc
+Phase_ID=C
+Monitored_Component=QF3开关电压
+Channel_Units=V
+Channel_Multiplier=0.007765524219597
+Channel_Offset=0.007765524219597
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#12]
+Channel_ID=QF3开关电压 3Uo
+Phase_ID=N
+Monitored_Component=QF3开关电压
+Channel_Units=V
+Channel_Multiplier=0.007764902358075
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#13]
+Channel_ID=QF4开关电压 Ua
+Phase_ID=A
+Monitored_Component=QF4开关电压
+Channel_Units=V
+Channel_Multiplier=0.007762875172871
+Channel_Offset=-0.007762875172871
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#14]
+Channel_ID=QF4开关电压 Ub
+Phase_ID=B
+Monitored_Component=QF4开关电压
+Channel_Units=V
+Channel_Multiplier=0.007763768375302
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#15]
+Channel_ID=QF4开关电压 Uc
+Phase_ID=C
+Monitored_Component=QF4开关电压
+Channel_Units=V
+Channel_Multiplier=0.007763503979973
+Channel_Offset=-0.007763503979973
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#16]
+Channel_ID=QF4开关电压 3Uo
+Phase_ID=N
+Monitored_Component=QF4开关电压
+Channel_Units=V
+Channel_Multiplier=0.007767474077284
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#17]
+Channel_ID=QF5开关电压 Ua
+Phase_ID=A
+Monitored_Component=QF5开关电压
+Channel_Units=V
+Channel_Multiplier=0.007769213715206
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#18]
+Channel_ID=QF5开关电压 Ub
+Phase_ID=B
+Monitored_Component=QF5开关电压
+Channel_Units=V
+Channel_Multiplier=0.007769011830156
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#19]
+Channel_ID=QF5开关电压 Uc
+Phase_ID=C
+Monitored_Component=QF5开关电压
+Channel_Units=V
+Channel_Multiplier=0.007767675962333
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#20]
+Channel_ID=QF5开关电压 3Uo
+Phase_ID=N
+Monitored_Component=QF5开关电压
+Channel_Units=V
+Channel_Multiplier=0.00776714763471
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#21]
+Channel_ID=QF6开关电压 Ua
+Phase_ID=A
+Monitored_Component=QF6开关电压
+Channel_Units=V
+Channel_Multiplier=0.007767823671803
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#22]
+Channel_ID=QF6开关电压 Ub
+Phase_ID=B
+Monitored_Component=QF6开关电压
+Channel_Units=V
+Channel_Multiplier=0.007768958117618
+Channel_Offset=0.015537916235237
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#23]
+Channel_ID=QF6开关电压 Uc
+Phase_ID=C
+Monitored_Component=QF6开关电压
+Channel_Units=V
+Channel_Multiplier=0.00776906646877
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#24]
+Channel_ID=QF6开关电压 3Uo
+Phase_ID=N
+Monitored_Component=QF6开关电压
+Channel_Units=V
+Channel_Multiplier=0.00776440551712
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=10000
+Channel_Ratio_Secondary=100
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#25]
+Channel_ID=TA1穿芯
+Phase_ID=A
+Monitored_Component=8#线路
+Channel_Units=A
+Channel_Multiplier=0.00856455448401
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=2500
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#26]
+Channel_ID=TA1零序
+Phase_ID=B
+Monitored_Component=8#线路
+Channel_Units=A
+Channel_Multiplier=0.008567955763491
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=2500
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#27]
+Channel_ID=无
+Phase_ID=C
+Monitored_Component=8#线路
+Channel_Units=A
+Channel_Multiplier=0.00854643679272
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=2500
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#28]
+Channel_ID=TA0电流 3Io
+Phase_ID=N
+Monitored_Component=8#线路
+Channel_Units=A
+Channel_Multiplier=0.008573756100038
+Channel_Offset=0.008573756100038
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=2500
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#29]
+Channel_ID=QF1开关电流 Ia
+Phase_ID=A
+Monitored_Component=QF1开关电流
+Channel_Units=A
+Channel_Multiplier=0.008550977148409
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#30]
+Channel_ID=QF1开关电流 Ib
+Phase_ID=B
+Monitored_Component=QF1开关电流
+Channel_Units=A
+Channel_Multiplier=0.008546989352717
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#31]
+Channel_ID=QF1开关电流 Ic
+Phase_ID=C
+Monitored_Component=QF1开关电流
+Channel_Units=A
+Channel_Multiplier=0.008557191647713
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#32]
+Channel_ID=QF1开关电流 3Io
+Phase_ID=N
+Monitored_Component=QF1开关电流
+Channel_Units=A
+Channel_Multiplier=0.008557752954013
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#33]
+Channel_ID=QF2开关电流 Ia
+Phase_ID=A
+Monitored_Component=QF2开关电流
+Channel_Units=A
+Channel_Multiplier=0.008561740747624
+Channel_Offset=0.008561740747624
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#34]
+Channel_ID=QF2开关电流 Ib
+Phase_ID=B
+Monitored_Component=QF2开关电流
+Channel_Units=A
+Channel_Multiplier=0.008548646518234
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#35]
+Channel_ID=QF2开关电流 Ic
+Phase_ID=C
+Monitored_Component=QF2开关电流
+Channel_Units=A
+Channel_Multiplier=0.008536717523031
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#36]
+Channel_ID=QF2开关电流 3Io
+Phase_ID=N
+Monitored_Component=QF2开关电流
+Channel_Units=A
+Channel_Multiplier=0.008548102704532
+Channel_Offset=0.008548102704532
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#37]
+Channel_ID=QF3开关电流 Ia
+Phase_ID=A
+Monitored_Component=QF3开关电流
+Channel_Units=A
+Channel_Multiplier=0.008561775220392
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#38]
+Channel_ID=QF3开关电流 Ib
+Phase_ID=B
+Monitored_Component=QF3开关电流
+Channel_Units=A
+Channel_Multiplier=0.008569121078582
+Channel_Offset=0.008569121078582
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#39]
+Channel_ID=QF3开关电流 Ic
+Phase_ID=C
+Monitored_Component=QF3开关电流
+Channel_Units=A
+Channel_Multiplier=0.008563035715733
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#40]
+Channel_ID=QF3开关电流 3Io
+Phase_ID=N
+Monitored_Component=QF3开关电流
+Channel_Units=A
+Channel_Multiplier=0.008566048042368
+Channel_Offset=0.008566048042368
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#41]
+Channel_ID=QF4开关电流 Ia
+Phase_ID=A
+Monitored_Component=QF4开关电流
+Channel_Units=A
+Channel_Multiplier=0.008563043947545
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#42]
+Channel_ID=QF4开关电流 Ib
+Phase_ID=B
+Monitored_Component=QF4开关电流
+Channel_Units=A
+Channel_Multiplier=0.008570518942191
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#43]
+Channel_ID=QF4开关电流 Ic
+Phase_ID=C
+Monitored_Component=QF4开关电流
+Channel_Units=A
+Channel_Multiplier=0.008561317840645
+Channel_Offset=-0.008561317840645
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#44]
+Channel_ID=QF4开关电流 3Io
+Phase_ID=N
+Monitored_Component=QF4开关电流
+Channel_Units=A
+Channel_Multiplier=0.008547809446427
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#45]
+Channel_ID=QF5开关电流 Ia
+Phase_ID=A
+Monitored_Component=QF5开关电流
+Channel_Units=A
+Channel_Multiplier=0.008561645569437
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#46]
+Channel_ID=QF5开关电流 Ib
+Phase_ID=B
+Monitored_Component=QF5开关电流
+Channel_Units=A
+Channel_Multiplier=0.008566427734437
+Channel_Offset=0.017132855468874
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#47]
+Channel_ID=QF5开关电流 Ic
+Phase_ID=C
+Monitored_Component=QF5开关电流
+Channel_Units=A
+Channel_Multiplier=0.008551434528147
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#48]
+Channel_ID=QF5开关电流 3Io
+Phase_ID=N
+Monitored_Component=QF5开关电流
+Channel_Units=A
+Channel_Multiplier=0.008549837557719
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#49]
+Channel_ID=QF6开关电流 Ia
+Phase_ID=A
+Monitored_Component=QF6开关电流
+Channel_Units=A
+Channel_Multiplier=0.008553367973663
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#50]
+Channel_ID=QF6开关电流 Ib
+Phase_ID=B
+Monitored_Component=QF6开关电流
+Channel_Units=A
+Channel_Multiplier=0.007032959000226
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#51]
+Channel_ID=QF6开关电流 Ic
+Phase_ID=C
+Monitored_Component=QF6开关电流
+Channel_Units=A
+Channel_Multiplier=0.008565581916335
+Channel_Offset=-0.017131163832669
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#52]
+Channel_ID=QF6开关电流 3Io
+Phase_ID=N
+Monitored_Component=QF6开关电流
+Channel_Units=A
+Channel_Multiplier=0.008571986776164
+Channel_Offset=-0.017143973552329
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#53]
+Channel_ID=QF7开关电流 Ia
+Phase_ID=A
+Monitored_Component=QF7开关电流
+Channel_Units=A
+Channel_Multiplier=0.008554170574783
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#54]
+Channel_ID=QF7开关电流 Ib
+Phase_ID=B
+Monitored_Component=QF7开关电流
+Channel_Units=A
+Channel_Multiplier=0.00855340244435
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#55]
+Channel_ID=QF7开关电流 Ic
+Phase_ID=C
+Monitored_Component=QF7开关电流
+Channel_Units=A
+Channel_Multiplier=0.008547403515474
+Channel_Offset=0
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#56]
+Channel_ID=QF7开关电流 3Io
+Phase_ID=N
+Monitored_Component=QF7开关电流
+Channel_Units=A
+Channel_Multiplier=0.008563596507542
+Channel_Offset=0.008563596507542
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=300
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#57]
+Channel_ID=1#直流通道750V
+Phase_ID=
+Channel_Units=V
+Channel_Multiplier=0.015594458257599
+Channel_Offset=0.467833747727966
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=220
+Channel_Ratio_Secondary=220
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#58]
+Channel_ID=2#直流通道750V
+Phase_ID=
+Channel_Units=V
+Channel_Multiplier=0.015672396359962
+Channel_Offset=-1.473205257836472
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=220
+Channel_Ratio_Secondary=220
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#59]
+Channel_ID=3#直流通道750V(坏)
+Phase_ID=
+Channel_Units=V
+Channel_Multiplier=0.02288818359375
+Channel_Offset=-208.80889892578125
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=220
+Channel_Ratio_Secondary=220
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#60]
+Channel_ID=4#直流通道750V
+Phase_ID=
+Channel_Units=V
+Channel_Multiplier=0.015688726146881
+Channel_Offset=-0.784436307344055
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=220
+Channel_Ratio_Secondary=220
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#61]
+Channel_ID=5#直流通道10A
+Phase_ID=
+Channel_Units=A
+Channel_Multiplier=0.000344641833407
+Channel_Offset=-0.98843277821035
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=5
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#62]
+Channel_ID=6#直流通道10A
+Phase_ID=
+Channel_Units=A
+Channel_Multiplier=0.000338019422803
+Channel_Offset=-0.507367153627362
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=5
+Channel_Ratio_Secondary=5
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#63]
+Channel_ID=7#直流通道75mV
+Phase_ID=
+Channel_Units=V
+Channel_Multiplier=0.000034565217391
+Channel_Offset=-0.013653260869565
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=0.03
+Channel_Ratio_Secondary=0.03
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#64]
+Channel_ID=8#直流通道75mV
+Phase_ID=
+Channel_Units=V
+Channel_Multiplier=0.000035243534025
+Channel_Offset=-0.006026644318228
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=0.03
+Channel_Ratio_Secondary=0.03
+Data_Primary_Secondary=S
+
+[Public Analog_Channel_#65]
+Channel_ID=频率曲线
+Phase_ID=
+Monitored_Component=10kV母线电压
+Channel_Units=Hz
+Channel_Multiplier=0.001
+Channel_Offset=50
+Channel_Skew=0
+Range_Minimum_Limit_Value=-32767
+Range_Maximum_Limit_Value=32767
+Channel_Ratio_Primary=1
+Channel_Ratio_Secondary=1
+Data_Primary_Secondary=S
+
+[Public Status_Channel_#1]
+Channel_ID=KMD短路开关
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#2]
+Channel_ID=KM1短接电阻开关
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#3]
+Channel_ID=KM2短接电阻开关
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#4]
+Channel_ID=QF1开关合闸
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#5]
+Channel_ID=QF2开关合闸
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#6]
+Channel_ID=QF3开关合闸
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#7]
+Channel_ID=QF4开关合闸
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#8]
+Channel_ID=QF5开关合闸
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#9]
+Channel_ID=QF6开关合闸
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#10]
+Channel_ID=10#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#11]
+Channel_ID=11#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#12]
+Channel_ID=12#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#13]
+Channel_ID=13#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#14]
+Channel_ID=14#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#15]
+Channel_ID=15#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#16]
+Channel_ID=16#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#17]
+Channel_ID=17#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#18]
+Channel_ID=18#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#19]
+Channel_ID=19#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#20]
+Channel_ID=20#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#21]
+Channel_ID=21#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#22]
+Channel_ID=22#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#23]
+Channel_ID=23#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#24]
+Channel_ID=24#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#25]
+Channel_ID=25#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#26]
+Channel_ID=26#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#27]
+Channel_ID=27#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#28]
+Channel_ID=28#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#29]
+Channel_ID=29#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#30]
+Channel_ID=30#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#31]
+Channel_ID=31#开关量通道
+Phase_ID=
+Normal_State=0
+
+[Public Status_Channel_#32]
+Channel_ID=32#开关量通道
+Phase_ID=
+Normal_State=0
+
+[ZYHD File_Description]
+Encode=GBK
+TimeZone=+480
+FltNum=2517
+
+[ZYHD ANALOG_CHANNELS_Parameter]
+CHNL_INFO_#1=1,1,10kV母线电压 Ua,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#2=2,2,10kV母线电压 Ub,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#3=3,3,10kV母线电压 Uc,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#4=4,4,10kV母线电压 3Uo,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#5=5,5,QF2开关电压 Ua,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#6=6,6,QF2开关电压 Ub,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#7=7,7,QF2开关电压 Uc,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#8=8,8,QF2开关电压 3Uo,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#9=9,9,QF3开关电压 Ua,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#10=10,10,QF3开关电压 Ub,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#11=11,11,QF3开关电压 Uc,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#12=12,12,QF3开关电压 3Uo,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#13=13,13,QF4开关电压 Ua,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#14=14,14,QF4开关电压 Ub,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#15=15,15,QF4开关电压 Uc,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#16=16,16,QF4开关电压 3Uo,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#17=17,17,QF5开关电压 Ua,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#18=18,18,QF5开关电压 Ub,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#19=19,19,QF5开关电压 Uc,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#20=20,20,QF5开关电压 3Uo,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#21=21,21,QF6开关电压 Ua,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#22=22,22,QF6开关电压 Ub,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#23=23,23,QF6开关电压 Uc,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#24=24,24,QF6开关电压 3Uo,TV,50,10,kV,100,V,1,0,
+CHNL_INFO_#25=25,25,TA1穿芯,TA,50,2.5,kA,5,A,1,0,
+CHNL_INFO_#26=26,26,TA1零序,TA,50,2.5,kA,5,A,1,0,
+CHNL_INFO_#27=27,27,无,TA,50,2.5,kA,5,A,1,0,
+CHNL_INFO_#28=28,28,TA0电流 3Io,TA,50,2.5,kA,5,A,1,0,
+CHNL_INFO_#29=29,29,QF1开关电流 Ia,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#30=30,30,QF1开关电流 Ib,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#31=31,31,QF1开关电流 Ic,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#32=32,32,QF1开关电流 3Io,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#33=33,33,QF2开关电流 Ia,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#34=34,34,QF2开关电流 Ib,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#35=35,35,QF2开关电流 Ic,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#36=36,36,QF2开关电流 3Io,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#37=37,37,QF3开关电流 Ia,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#38=38,38,QF3开关电流 Ib,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#39=39,39,QF3开关电流 Ic,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#40=40,40,QF3开关电流 3Io,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#41=41,41,QF4开关电流 Ia,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#42=42,42,QF4开关电流 Ib,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#43=43,43,QF4开关电流 Ic,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#44=44,44,QF4开关电流 3Io,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#45=45,45,QF5开关电流 Ia,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#46=46,46,QF5开关电流 Ib,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#47=47,47,QF5开关电流 Ic,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#48=48,48,QF5开关电流 3Io,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#49=49,49,QF6开关电流 Ia,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#50=50,50,QF6开关电流 Ib,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#51=51,51,QF6开关电流 Ic,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#52=52,52,QF6开关电流 3Io,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#53=53,53,QF7开关电流 Ia,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#54=54,54,QF7开关电流 Ib,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#55=55,55,QF7开关电流 Ic,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#56=56,56,QF7开关电流 3Io,TA,50,0.3,kA,5,A,1,0,
+CHNL_INFO_#57=57,57,1#直流通道750V,DV,50,1,V,1,V,1,0,V
+CHNL_INFO_#58=58,58,2#直流通道750V,DV,50,1,V,1,V,1,0,V
+CHNL_INFO_#59=59,59,3#直流通道750V(坏),DV,50,1,V,1,V,1,0,V
+CHNL_INFO_#60=60,60,4#直流通道750V,DV,50,1,V,1,V,1,0,V
+CHNL_INFO_#61=61,61,5#直流通道10A,DA,50,1,A,1,A,1,0,A
+CHNL_INFO_#62=62,62,6#直流通道10A,DA,50,1,A,1,A,1,0,A
+CHNL_INFO_#63=63,63,7#直流通道75mV,DV,50,1,V,1,V,1,0,V
+CHNL_INFO_#64=64,64,8#直流通道75mV,DV,50,1,V,1,V,1,0,V
+CHNL_INFO_#65=65,0,频率曲线,FQ,0,1,Hz,1,Hz,1,0,
+
+[ZYHD STATUS_CHANNELS_Parameter]
+CHNL_INFO_#1=1,1,KMD短路开关,Other,Normal,
+CHNL_INFO_#2=2,2,KM1短接电阻开关,Other,Normal,
+CHNL_INFO_#3=3,3,KM2短接电阻开关,Other,Normal,
+CHNL_INFO_#4=4,4,QF1开关合闸,Other,Normal,
+CHNL_INFO_#5=5,5,QF2开关合闸,Other,Normal,
+CHNL_INFO_#6=6,6,QF3开关合闸,Other,Normal,
+CHNL_INFO_#7=7,7,QF4开关合闸,Other,Normal,
+CHNL_INFO_#8=8,8,QF5开关合闸,Other,Normal,
+CHNL_INFO_#9=9,9,QF6开关合闸,Other,Normal,
+CHNL_INFO_#10=10,10,10#开关量通道,Other,Normal,
+CHNL_INFO_#11=11,11,11#开关量通道,Other,Normal,
+CHNL_INFO_#12=12,12,12#开关量通道,Other,Normal,
+CHNL_INFO_#13=13,13,13#开关量通道,Other,Normal,
+CHNL_INFO_#14=14,14,14#开关量通道,Other,Normal,
+CHNL_INFO_#15=15,15,15#开关量通道,Other,Normal,
+CHNL_INFO_#16=16,16,16#开关量通道,Other,Normal,
+CHNL_INFO_#17=17,17,17#开关量通道,Other,Normal,
+CHNL_INFO_#18=18,18,18#开关量通道,Other,Normal,
+CHNL_INFO_#19=19,19,19#开关量通道,Other,Normal,
+CHNL_INFO_#20=20,20,20#开关量通道,Other,Normal,
+CHNL_INFO_#21=21,21,21#开关量通道,Other,Normal,
+CHNL_INFO_#22=22,22,22#开关量通道,Other,Normal,
+CHNL_INFO_#23=23,23,23#开关量通道,Other,Normal,
+CHNL_INFO_#24=24,24,24#开关量通道,Other,Normal,
+CHNL_INFO_#25=25,25,25#开关量通道,Other,Normal,
+CHNL_INFO_#26=26,26,26#开关量通道,Other,Normal,
+CHNL_INFO_#27=27,27,27#开关量通道,Other,Normal,
+CHNL_INFO_#28=28,28,28#开关量通道,Other,Normal,
+CHNL_INFO_#29=29,29,29#开关量通道,Other,Normal,
+CHNL_INFO_#30=30,30,30#开关量通道,Other,Normal,
+CHNL_INFO_#31=31,31,31#开关量通道,Other,Normal,
+CHNL_INFO_#32=32,32,32#开关量通道,Other,Normal,
+
+[ZYHD Bus_#1]
+DEV_ID=1073741825,10kV母线电压
+RATED_VALUE=10kV
+TV_RATIO=10kV/100V
+TV_CHNS=1,2,3,4
+
+[ZYHD Bus_#2]
+DEV_ID=1073741827,QF2开关电压
+RATED_VALUE=10kV
+TV_RATIO=10kV/100V
+TV_CHNS=5,6,7,8
+
+[ZYHD Bus_#3]
+DEV_ID=1073741828,QF3开关电压
+RATED_VALUE=10kV
+TV_RATIO=10kV/100V
+TV_CHNS=9,10,11,12
+
+[ZYHD Bus_#4]
+DEV_ID=1073741829,QF4开关电压
+RATED_VALUE=10kV
+TV_RATIO=10kV/100V
+TV_CHNS=13,14,15,16
+
+[ZYHD Bus_#5]
+DEV_ID=1073741830,QF5开关电压
+RATED_VALUE=10kV
+TV_RATIO=10kV/100V
+TV_CHNS=17,18,19,20
+
+[ZYHD Bus_#6]
+DEV_ID=1073741840,QF6开关电压
+RATED_VALUE=10kV
+TV_RATIO=10kV/100V
+TV_CHNS=21,22,23,24
+
+[ZYHD Line_#1]
+DEV_ID=2147483655,QF1开关电流
+OBJECT_TYPE=LINE
+LENGTH=100km
+RX=0.1, 0.4,  0.3, 1.2
+TA_CHNS=29,30,31,32
+TV_CHNS_#1=1,2,3,4
+BUS_ID_#1=1073741825
+
+[ZYHD Line_#2]
+DEV_ID=2147483656,QF2开关电流
+OBJECT_TYPE=LINE
+LENGTH=100km
+RX=0.1, 0.4,  0.3, 1.2
+TA_CHNS=33,34,35,36
+TV_CHNS_#1=1,2,3,4
+BUS_ID_#1=1073741825
+
+[ZYHD Line_#3]
+DEV_ID=2147483657,QF3开关电流
+OBJECT_TYPE=LINE
+LENGTH=100km
+RX=0.1, 0.4,  0.3, 1.2
+TA_CHNS=37,38,39,40
+TV_CHNS_#1=1,2,3,4
+BUS_ID_#1=1073741825
+
+[ZYHD Line_#4]
+DEV_ID=2147483658,QF4开关电流
+OBJECT_TYPE=LINE
+LENGTH=100km
+RX=0.1, 0.4,  0.3, 1.2
+TA_CHNS=41,42,43,44
+BUS_ID_#1=1073741826
+
+[ZYHD Line_#5]
+DEV_ID=2147483659,QF5开关电流
+OBJECT_TYPE=LINE
+LENGTH=100km
+RX=0.1, 0.4,  0.3, 1.2
+TA_CHNS=45,46,47,48
+BUS_ID_#1=1073741826
+
+[ZYHD Line_#6]
+DEV_ID=2147483660,QF6开关电流
+OBJECT_TYPE=LINE
+LENGTH=100km
+RX=0.1, 0.4,  0.3, 1.2
+TA_CHNS=49,50,51,52
+TV_CHNS_#1=1,2,3,4
+BUS_ID_#1=1073741825
+
+[ZYHD Line_#7]
+DEV_ID=2147483661,QF7开关电流
+OBJECT_TYPE=LINE
+LENGTH=100km
+RX=0.1, 0.4,  0.3, 1.2
+TA_CHNS=53,54,55,56
+
+[ZYHD Line_#8]
+DEV_ID=2147483662,8#线路
+OBJECT_TYPE=LINE
+LENGTH=100km
+RX=0.1, 0.4,  0.3, 1.2
+TA_CHNS=25,26,27,28
+TV_CHNS_#1=5,6,7,8
+BUS_ID_#1=1073741827
+
+[ZYHD TRIGGER_INFO]
+CODE=0x1,3
+DESCRIPTION=10kV母线电压 3Uo突变量启动
+VALUE=20.787,
+
+[ZYHD TRIG_#1]
+TRIG_NAME=10kV母线电压 3Uo突变量启动
+TRIG_TIME=27/04/2024,05:49:24.244400
+TRIG_VALUE=20.787V,0.455V
+
+[ZYHD ACT_FILE_CRITERIA]
+VOLTAGE_SETTING=0.85
+CURRENT_SETTING=1.1
+ZERO_CURRENT_VALUE=0.1
+
+[ZYHD NW_DEVINFO_#1]
+Modulars Time=20/03/2019,00:00:00.000000
+Modulars Ver=2.30
+Modulars Crc=C3C49D38

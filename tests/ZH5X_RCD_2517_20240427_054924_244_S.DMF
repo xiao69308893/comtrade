@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scl:ComtradeModel station_name="华中科技大学动模实验室" version="1.0" reference="0" rec_dev_name="28555#录波装置">
+<scl:AnalogChannel idx_cfg="1" idx_org="1" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="2" idx_org="2" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="3" idx_org="3" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="4" idx_org="4" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="5" idx_org="5" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="6" idx_org="6" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="7" idx_org="7" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="8" idx_org="8" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="9" idx_org="9" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="10" idx_org="10" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="11" idx_org="11" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="12" idx_org="12" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="13" idx_org="13" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="14" idx_org="14" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="15" idx_org="15" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="16" idx_org="16" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="17" idx_org="17" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="18" idx_org="18" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="19" idx_org="19" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="20" idx_org="20" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="21" idx_org="21" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="22" idx_org="22" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="23" idx_org="23" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="24" idx_org="24" type="A" flag="ACV" freq="50" sIUnit="V" primary="10000" secondary="100" ps="S"/>
+<scl:AnalogChannel idx_cfg="25" idx_org="25" type="A" flag="ACC" freq="50" sIUnit="A" primary="2500" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="26" idx_org="26" type="A" flag="ACC" freq="50" sIUnit="A" primary="2500" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="27" idx_org="27" type="A" flag="ACC" freq="50" sIUnit="A" primary="2500" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="28" idx_org="28" type="A" flag="ACC" freq="50" sIUnit="A" primary="2500" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="29" idx_org="29" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="30" idx_org="30" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="31" idx_org="31" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="32" idx_org="32" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="33" idx_org="33" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="34" idx_org="34" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="35" idx_org="35" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="36" idx_org="36" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="37" idx_org="37" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="38" idx_org="38" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="39" idx_org="39" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="40" idx_org="40" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="41" idx_org="41" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="42" idx_org="42" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="43" idx_org="43" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="44" idx_org="44" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="45" idx_org="45" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="46" idx_org="46" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="47" idx_org="47" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="48" idx_org="48" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="49" idx_org="49" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="50" idx_org="50" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="51" idx_org="51" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="52" idx_org="52" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="53" idx_org="53" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="54" idx_org="54" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="55" idx_org="55" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="56" idx_org="56" type="A" flag="ACC" freq="50" sIUnit="A" primary="300" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="57" idx_org="57" type="D" flag="ACV" p_min="-750" p_max="750" s_min="-750" s_max="750" au="1" bu="0" sIUnit="V" primary="220" secondary="220" ps="S"/>
+<scl:AnalogChannel idx_cfg="58" idx_org="58" type="D" flag="ACV" p_min="-750" p_max="750" s_min="-750" s_max="750" au="1" bu="0" sIUnit="V" primary="220" secondary="220" ps="S"/>
+<scl:AnalogChannel idx_cfg="59" idx_org="59" type="D" flag="ACV" p_min="-750" p_max="750" s_min="-750" s_max="750" au="1" bu="0" sIUnit="V" primary="220" secondary="220" ps="S"/>
+<scl:AnalogChannel idx_cfg="60" idx_org="60" type="D" flag="ACV" p_min="-750" p_max="750" s_min="-750" s_max="750" au="1" bu="0" sIUnit="V" primary="220" secondary="220" ps="S"/>
+<scl:AnalogChannel idx_cfg="61" idx_org="61" type="D" flag="DCC" p_min="-10" p_max="10" s_min="-10" s_max="10" au="1" bu="0" sIUnit="A" primary="5" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="62" idx_org="62" type="D" flag="DCC" p_min="-10" p_max="10" s_min="-10" s_max="10" au="1" bu="0" sIUnit="A" primary="5" secondary="5" ps="S"/>
+<scl:AnalogChannel idx_cfg="63" idx_org="63" type="D" flag="ACV" p_min="-0.075" p_max="0.075" s_min="-0.075" s_max="0.075" au="1" bu="0" sIUnit="V" primary="0.03" secondary="0.03" ps="S"/>
+<scl:AnalogChannel idx_cfg="64" idx_org="64" type="D" flag="ACV" p_min="-0.075" p_max="0.075" s_min="-0.075" s_max="0.075" au="1" bu="0" sIUnit="V" primary="0.03" secondary="0.03" ps="S"/>
+<scl:AnalogChannel idx_cfg="65" idx_org="65" type="O" flag="FQ" sIUnit="Hz" primary="1" secondary="1" ps="S"/>
+<scl:StatusChannel idx_cfg="1" idx_org="1" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="2" idx_org="2" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="3" idx_org="3" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="4" idx_org="4" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="5" idx_org="5" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="6" idx_org="6" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="7" idx_org="7" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="8" idx_org="8" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="9" idx_org="9" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="10" idx_org="10" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="11" idx_org="11" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="12" idx_org="12" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="13" idx_org="13" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="14" idx_org="14" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="15" idx_org="15" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="16" idx_org="16" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="17" idx_org="17" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="18" idx_org="18" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="19" idx_org="19" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="20" idx_org="20" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="21" idx_org="21" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="22" idx_org="22" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="23" idx_org="23" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="24" idx_org="24" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="25" idx_org="25" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="26" idx_org="26" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="27" idx_org="27" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="28" idx_org="28" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="29" idx_org="29" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="30" idx_org="30" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="31" idx_org="31" type="Other" flag="general" contact="NormallyOpen" />
+<scl:StatusChannel idx_cfg="32" idx_org="32" type="Other" flag="general" contact="NormallyOpen" />
+<scl:Bus idx="1" bus_name="10kV母线电压" VRtg="10" VRtgSnd="100" VRtgSnd_Pos="BUS" >
+<scl:ACVChn ua_idx="1" ub_idx="2" uc_idx="3" un_idx="4" ul_idx=""/>
+</scl:Bus>
+<scl:Bus idx="2" bus_name="QF1开关电压" VRtg="10" VRtgSnd="100" VRtgSnd_Pos="BUS" >
+<scl:ACVChn ua_idx="0" ub_idx="0" uc_idx="0" un_idx="0" ul_idx=""/>
+</scl:Bus>
+<scl:Bus idx="3" bus_name="QF2开关电压" VRtg="10" VRtgSnd="100" VRtgSnd_Pos="BUS" >
+<scl:ACVChn ua_idx="5" ub_idx="6" uc_idx="7" un_idx="8" ul_idx=""/>
+</scl:Bus>
+<scl:Bus idx="4" bus_name="QF3开关电压" VRtg="10" VRtgSnd="100" VRtgSnd_Pos="BUS" >
+<scl:ACVChn ua_idx="9" ub_idx="10" uc_idx="11" un_idx="12" ul_idx=""/>
+</scl:Bus>
+<scl:Bus idx="5" bus_name="QF4开关电压" VRtg="10" VRtgSnd="100" VRtgSnd_Pos="BUS" >
+<scl:ACVChn ua_idx="13" ub_idx="14" uc_idx="15" un_idx="16" ul_idx=""/>
+</scl:Bus>
+<scl:Bus idx="6" bus_name="QF5开关电压" VRtg="10" VRtgSnd="100" VRtgSnd_Pos="BUS" >
+<scl:ACVChn ua_idx="17" ub_idx="18" uc_idx="19" un_idx="20" ul_idx=""/>
+</scl:Bus>
+<scl:Bus idx="7" bus_name="QF6开关电压" VRtg="10" VRtgSnd="100" VRtgSnd_Pos="BUS" >
+<scl:ACVChn ua_idx="21" ub_idx="22" uc_idx="23" un_idx="24" ul_idx=""/>
+</scl:Bus>
+<scl:Line idx="1" line_name="QF1开关电流" bus_ID="1" VRtg="10" ARtg="300" ARtgSnd="5" LinLen="100" bran_num="1" >
+<scl:RX r1="0.1" x1="0.4" r0="0.3" x0="1.2"/>
+<scl:CG c1="0" c0="0"/>
+<scl:ACC_Bran bran_idx="1" ia_idx="29" ib_idx="30" ic_idx="31" in_idx="32" dir="POS"/>
+<scl:PX px="0" px0="0"/>
+</scl:Line>
+<scl:Line idx="2" line_name="QF2开关电流" bus_ID="1" VRtg="10" ARtg="300" ARtgSnd="5" LinLen="100" bran_num="1" >
+<scl:RX r1="0.1" x1="0.4" r0="0.3" x0="1.2"/>
+<scl:CG c1="0" c0="0"/>
+<scl:ACC_Bran bran_idx="1" ia_idx="33" ib_idx="34" ic_idx="35" in_idx="36" dir="POS"/>
+<scl:PX px="0" px0="0"/>
+</scl:Line>
+<scl:Line idx="3" line_name="QF3开关电流" bus_ID="1" VRtg="10" ARtg="300" ARtgSnd="5" LinLen="100" bran_num="1" >
+<scl:RX r1="0.1" x1="0.4" r0="0.3" x0="1.2"/>
+<scl:CG c1="0" c0="0"/>
+<scl:ACC_Bran bran_idx="1" ia_idx="37" ib_idx="38" ic_idx="39" in_idx="40" dir="POS"/>
+<scl:PX px="0" px0="0"/>
+</scl:Line>
+<scl:Line idx="4" line_name="QF4开关电流" bus_ID="2" VRtg="10" ARtg="300" ARtgSnd="5" LinLen="100" bran_num="1" >
+<scl:RX r1="0.1" x1="0.4" r0="0.3" x0="1.2"/>
+<scl:CG c1="0" c0="0"/>
+<scl:ACC_Bran bran_idx="1" ia_idx="41" ib_idx="42" ic_idx="43" in_idx="44" dir="POS"/>
+<scl:PX px="0" px0="0"/>
+</scl:Line>
+<scl:Line idx="5" line_name="QF5开关电流" bus_ID="2" VRtg="10" ARtg="300" ARtgSnd="5" LinLen="100" bran_num="1" >
+<scl:RX r1="0.1" x1="0.4" r0="0.3" x0="1.2"/>
+<scl:CG c1="0" c0="0"/>
+<scl:ACC_Bran bran_idx="1" ia_idx="45" ib_idx="46" ic_idx="47" in_idx="48" dir="POS"/>
+<scl:PX px="0" px0="0"/>
+</scl:Line>
+<scl:Line idx="6" line_name="QF6开关电流" bus_ID="1" VRtg="10" ARtg="300" ARtgSnd="5" LinLen="100" bran_num="1" >
+<scl:RX r1="0.1" x1="0.4" r0="0.3" x0="1.2"/>
+<scl:CG c1="0" c0="0"/>
+<scl:ACC_Bran bran_idx="1" ia_idx="49" ib_idx="50" ic_idx="51" in_idx="52" dir="POS"/>
+<scl:PX px="0" px0="0"/>
+</scl:Line>
+<scl:Line idx="7" line_name="QF7开关电流" bus_ID="0" VRtg="0" ARtg="300" ARtgSnd="5" LinLen="100" bran_num="1" >
+<scl:RX r1="0.1" x1="0.4" r0="0.3" x0="1.2"/>
+<scl:CG c1="0" c0="0"/>
+<scl:ACC_Bran bran_idx="1" ia_idx="53" ib_idx="54" ic_idx="55" in_idx="56" dir="POS"/>
+<scl:PX px="0" px0="0"/>
+</scl:Line>
+<scl:Line idx="8" line_name="8#线路" bus_ID="3" VRtg="10" ARtg="2500" ARtgSnd="5" LinLen="100" bran_num="1" >
+<scl:RX r1="0.1" x1="0.4" r0="0.3" x0="1.2"/>
+<scl:CG c1="0" c0="0"/>
+<scl:ACC_Bran bran_idx="1" ia_idx="25" ib_idx="26" ic_idx="27" in_idx="28" dir="POS"/>
+<scl:PX px="0" px0="0"/>
+</scl:Line>
+<scl:Line idx="9" line_name="QF6开关电流" bus_ID="0" VRtg="0" ARtg="300" ARtgSnd="5" LinLen="100" bran_num="1" >
+<scl:RX r1="0.1" x1="0.4" r0="0.3" x0="1.2"/>
+<scl:CG c1="0" c0="0"/>
+<scl:ACC_Bran bran_idx="1" ia_idx="0" ib_idx="0" ic_idx="0" in_idx="0" dir="POS"/>
+<scl:PX px="0" px0="0"/>
+</scl:Line>
+</scl:ComtradeModel>
