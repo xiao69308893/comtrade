@@ -152,22 +152,29 @@ class DataPreviewWidget(QWidget):
         # 创建组框
         group_box = QGroupBox("📊 数据预览")
         group_layout = QVBoxLayout(group_box)
+        group_layout.setContentsMargins(5, 5, 5, 5)
 
         # 创建表格
         self.table = QTableWidget()
         self.table.setAlternatingRowColors(True)
         self.table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
-        self.table.setMaximumHeight(200)
+        # 移除最大高度限制，让表格平铺整个窗口
+        from PyQt6.QtWidgets import QSizePolicy
+        self.table.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.table.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.table.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        
+        # 设置垂直表头（行号列）宽度，确保3位数能完整显示
+        self.table.verticalHeader().setFixedWidth(40)
 
-        group_layout.addWidget(self.table)
+        group_layout.addWidget(self.table, 1)  # 设置拉伸因子为1
 
         # 状态标签
         self.status_label = QLabel("暂无数据")
         self.status_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.status_label.setStyleSheet("QLabel { color: #888888; font-style: italic; }")
-        group_layout.addWidget(self.status_label)
+        self.status_label.setMaximumHeight(25)  # 限制状态标签高度
+        group_layout.addWidget(self.status_label, 0)  # 设置拉伸因子为0
 
         layout.addWidget(group_box)
 
@@ -218,7 +225,11 @@ class DataPreviewWidget(QWidget):
             for row in range(show_rows):
                 for col, column_name in enumerate(df.columns):
                     value = df.iloc[row, col]
-                    if isinstance(value, float):
+                    
+                    # 处理nan和无效数据
+                    if pd.isna(value) or (isinstance(value, float) and not np.isfinite(value)):
+                        text = "N/A"
+                    elif isinstance(value, float):
                         if column_name.startswith('时间'):
                             text = f"{value:.6f}"
                         else:
@@ -237,6 +248,17 @@ class DataPreviewWidget(QWidget):
 
             # 调整列宽
             self.table.resizeColumnsToContents()
+            
+            # 固定时间列宽度，防止因nan等数据导致列过宽
+            if self.table.columnCount() > 0:
+                self.table.setColumnWidth(0, 120)  # 时间列固定宽度120像素
+                
+            # 让其他列平分剩余空间
+            if self.table.columnCount() > 1:
+                header = self.table.horizontalHeader()
+                header.setStretchLastSection(True)
+                for col in range(1, self.table.columnCount()):
+                    header.setSectionResizeMode(col, header.ResizeMode.Stretch)
 
             # 更新状态
             total_rows = len(record.time_axis)
@@ -275,19 +297,35 @@ class ChannelStatisticsWidget(QWidget):
         # 创建组框
         group_box = QGroupBox("📈 通道统计")
         group_layout = QVBoxLayout(group_box)
+        group_layout.setContentsMargins(5, 5, 5, 5)
 
         # 创建表格
         self.table = QTableWidget()
         self.table.setAlternatingRowColors(True)
         self.table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
-        self.table.setMaximumHeight(180)
+        # 移除最大高度限制，让表格平铺整个窗口
+        from PyQt6.QtWidgets import QSizePolicy
+        self.table.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.table.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.table.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        
+        # 设置垂直表头（行号列）宽度，确保3位数能完整显示
+        self.table.verticalHeader().setFixedWidth(40)
 
         # 设置表头
         headers = ['通道名称', 'RMS值', '峰值', '最大值', '最小值']
         self.table.setColumnCount(len(headers))
         self.table.setHorizontalHeaderLabels(headers)
 
-        group_layout.addWidget(self.table)
+        group_layout.addWidget(self.table, 1)  # 设置拉伸因子为1
+
+        # 状态标签
+        self.status_label = QLabel("暂无数据")
+        self.status_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.status_label.setStyleSheet("QLabel { color: #888888; font-style: italic; }")
+        self.status_label.setMaximumHeight(25)  # 限制状态标签高度
+        group_layout.addWidget(self.status_label, 0)  # 设置拉伸因子为0
+
         layout.addWidget(group_box)
 
     def update_statistics(self, record: ComtradeRecord):
@@ -344,6 +382,16 @@ class ChannelStatisticsWidget(QWidget):
 
             # 调整列宽
             self.table.resizeColumnsToContents()
+            
+            # 让所有列平分剩余空间
+            header = self.table.horizontalHeader()
+            header.setStretchLastSection(True)
+            for col in range(self.table.columnCount()):
+                header.setSectionResizeMode(col, header.ResizeMode.Stretch)
+            
+            # 更新状态标签
+            self.status_label.setText(f"共 {len(channel_stats)} 个通道")
+            self.status_label.hide()  # 有数据时隐藏状态标签
 
         except Exception as e:
             logger.error(f"更新通道统计失败: {e}")
@@ -357,6 +405,10 @@ class ChannelStatisticsWidget(QWidget):
         headers = ['通道名称', 'RMS值', '峰值', '最大值', '最小值']
         self.table.setColumnCount(len(headers))
         self.table.setHorizontalHeaderLabels(headers)
+        
+        # 显示状态标签
+        self.status_label.setText("暂无数据")
+        self.status_label.show()
 
 
 class InfoPanel(QWidget):
