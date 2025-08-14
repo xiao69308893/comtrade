@@ -18,7 +18,7 @@ from typing import Dict, List, Optional, Tuple
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
     QCheckBox, QComboBox, QLabel, QSpinBox, QDoubleSpinBox,
-    QGroupBox, QSlider, QSplitter
+    QGroupBox, QSlider, QSplitter, QScrollArea
 )
 from PyQt6.QtCore import Qt, pyqtSignal
 
@@ -157,6 +157,28 @@ class PlotCanvas(FigureCanvas):
         if total_subplots == 0:
             return
 
+        # 根据子图数量动态调整figure高度，确保每个波形图有合适高度
+        # 获取当前窗口高度，计算合适的子图高度
+        widget_height = self.parent().height() if self.parent() else 600
+        # 每个子图高度 = (窗口高度 / 5) * 0.8，转换为英寸（假设DPI=100）
+        min_height_per_subplot = max(1.5, (widget_height / 5) * 0.8 / 100)
+        title_height = 0.5  # 标题预留高度（英寸）
+        total_height = total_subplots * min_height_per_subplot + title_height
+        
+        # 动态计算合适的图形宽度，根据可用宽度调整
+        widget_width = self.parent().width() if self.parent() else 800
+        # 转换为英寸，留出一些边距
+        figure_width = max(6, (widget_width) / 100)  # 减去100像素边距，转换为英寸
+        
+        # 重新设置figure尺寸
+        self.figure.set_size_inches(figure_width, total_height)
+        
+        # 设置canvas的固定尺寸以支持滚动
+        dpi = self.figure.get_dpi()
+        canvas_width = int(figure_width * dpi)
+        canvas_height = int(total_height * dpi)
+        self.setFixedSize(canvas_width, canvas_height)
+
         # 绘制模拟通道
         self._plot_analog_channels(record, analog_indices, total_subplots, 0)
 
@@ -165,10 +187,8 @@ class PlotCanvas(FigureCanvas):
             self._plot_digital_channels(record, digital_indices, total_subplots, n_analog)
 
         # 设置整体标题
-        title = f'COMTRADE{create_safe_text("波形数据")} - {record.station_name}'
-        self.figure.suptitle(title, fontsize=14, fontweight='bold')
-
-
+        # title = f'COMTRADE{create_safe_text("波形数据")} - {record.station_name}'
+        # self.figure.suptitle(title, fontsize=14, fontweight='bold')
 
         # 调整布局
         self.figure.tight_layout()
@@ -547,14 +567,27 @@ class PlotWidget(QWidget):
         # 绘图区域
         plot_widget = QWidget()
         plot_layout = QVBoxLayout(plot_widget)
+        plot_layout.setContentsMargins(0, 0, 0, 0)
 
         # 绘图画布
         self.canvas = PlotCanvas(self.settings)
-        plot_layout.addWidget(self.canvas)
-
+        
         # 导航工具栏
         self.toolbar = NavigationToolbar(self.canvas, self)
         plot_layout.addWidget(self.toolbar)
+        
+        # 创建滚动区域
+        scroll_area = QScrollArea()
+        scroll_area.setWidget(self.canvas)
+        scroll_area.setWidgetResizable(False)  # 设置为False以允许canvas超出滚动区域
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # 禁用水平滚动条
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        # 设置最小尺寸确保滚动区域有固定大小
+        scroll_area.setMinimumSize(400, 300)
+        
+        # 启用鼠标滚轮支持
+        scroll_area.wheelEvent = self._handle_wheel_event
+        plot_layout.addWidget(scroll_area)
 
         splitter.addWidget(plot_widget)
 
@@ -565,6 +598,26 @@ class PlotWidget(QWidget):
 
         # 设置分割器比例
         splitter.setSizes([800, 250])
+
+    def _handle_wheel_event(self, event):
+        """处理鼠标滚轮事件，支持垂直滚动"""
+        # 获取滚动区域的垂直滚动条
+        scroll_area = self.sender()
+        if scroll_area and hasattr(scroll_area, 'verticalScrollBar'):
+            v_scrollbar = scroll_area.verticalScrollBar()
+            # 根据滚轮方向调整滚动位置
+            delta = event.angleDelta().y()
+            current_value = v_scrollbar.value()
+            # 每次滚动30像素
+            scroll_step = 30
+            if delta > 0:  # 向上滚动
+                new_value = max(0, current_value - scroll_step)
+            else:  # 向下滚动
+                new_value = min(v_scrollbar.maximum(), current_value + scroll_step)
+            v_scrollbar.setValue(new_value)
+        
+        # 接受事件，防止传递给父组件
+        event.accept()
 
     def plot_channels(self, record: ComtradeRecord, selected_channels: Dict[str, List[int]]):
         """绘制通道"""
