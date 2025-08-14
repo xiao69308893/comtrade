@@ -134,20 +134,19 @@ class ComtradeReader:
             # 直接尝试读取原文件
             logger.info(f"使用comtrade库读取文件: {file_info.cfg_file}")
 
-            # 如果是非ASCII编码，创建临时文件
+            # 如果是非ASCII编码，创建临时文件集合
             if cfg_encoding.lower() not in ['utf-8', 'ascii', 'latin-1']:
-                temp_cfg_file = self._create_temp_utf8_file(file_info.cfg_file, cfg_encoding)
-                if temp_cfg_file:
+                temp_files = self._create_temp_file_set(file_info, cfg_encoding)
+                if temp_files:
                     try:
-                        comtrade_data = comtrade.load(temp_cfg_file)
+                        comtrade_data = comtrade.load(temp_files['cfg'])
                         self.current_record = self._create_record(comtrade_data, file_info)
                         self.file_info = file_info
                         logger.info("使用comtrade库成功读取文件")
                         return True
                     finally:
-                        # 清理临时文件
-                        if os.path.exists(temp_cfg_file):
-                            os.remove(temp_cfg_file)
+                        # 清理所有临时文件
+                        self._cleanup_temp_files(temp_files)
             else:
                 # 直接读取
                 comtrade_data = comtrade.load(file_info.cfg_file)
@@ -160,29 +159,84 @@ class ComtradeReader:
             logger.warning(f"comtrade库读取失败: {e}")
             return False
 
-    def _create_temp_utf8_file(self, source_file: str, source_encoding: str) -> Optional[str]:
-        """创建临时UTF-8文件"""
+    def _create_temp_file_set(self, file_info: FileInfo, cfg_encoding: str) -> Optional[Dict[str, str]]:
+        """创建完整的临时文件集合"""
         try:
             import tempfile
             import shutil
-
-            # 创建临时文件
-            temp_fd, temp_path = tempfile.mkstemp(suffix='.cfg', prefix='comtrade_')
-            os.close(temp_fd)
-
-            # 转换编码
-            with open(source_file, 'r', encoding=source_encoding) as src:
+            
+            temp_files = {}
+            temp_dir = tempfile.mkdtemp(prefix='comtrade_')
+            
+            # 获取原始文件的基础名称（不含扩展名）
+            base_name = os.path.splitext(os.path.basename(file_info.cfg_file))[0]
+            
+            # 创建临时CFG文件（转换编码）
+            temp_cfg_path = os.path.join(temp_dir, f"{base_name}.cfg")
+            with open(file_info.cfg_file, 'r', encoding=cfg_encoding) as src:
                 content = src.read()
-
-            with open(temp_path, 'w', encoding='utf-8') as dst:
+            with open(temp_cfg_path, 'w', encoding='utf-8') as dst:
                 dst.write(content)
-
-            logger.debug(f"创建临时UTF-8文件: {temp_path}")
-            return temp_path
-
+            temp_files['cfg'] = temp_cfg_path
+            
+            # 复制DAT文件（二进制文件，不需要编码转换）
+            if os.path.exists(file_info.dat_file):
+                temp_dat_path = os.path.join(temp_dir, f"{base_name}.dat")
+                shutil.copy2(file_info.dat_file, temp_dat_path)
+                temp_files['dat'] = temp_dat_path
+            
+            # 复制HDR文件（如果存在）
+            if file_info.hdr_file and os.path.exists(file_info.hdr_file):
+                temp_hdr_path = os.path.join(temp_dir, f"{base_name}.hdr")
+                # HDR文件可能也需要编码转换
+                try:
+                    with open(file_info.hdr_file, 'r', encoding=cfg_encoding) as src:
+                        content = src.read()
+                    with open(temp_hdr_path, 'w', encoding='utf-8') as dst:
+                        dst.write(content)
+                    temp_files['hdr'] = temp_hdr_path
+                except UnicodeDecodeError:
+                    # 如果编码转换失败，直接复制二进制文件
+                    shutil.copy2(file_info.hdr_file, temp_hdr_path)
+                    temp_files['hdr'] = temp_hdr_path
+            
+            # 复制INF文件（如果存在）
+            if file_info.inf_file and os.path.exists(file_info.inf_file):
+                temp_inf_path = os.path.join(temp_dir, f"{base_name}.inf")
+                # INF文件可能也需要编码转换
+                try:
+                    with open(file_info.inf_file, 'r', encoding=cfg_encoding) as src:
+                        content = src.read()
+                    with open(temp_inf_path, 'w', encoding='utf-8') as dst:
+                        dst.write(content)
+                    temp_files['inf'] = temp_inf_path
+                except UnicodeDecodeError:
+                    # 如果编码转换失败，直接复制二进制文件
+                    shutil.copy2(file_info.inf_file, temp_inf_path)
+                    temp_files['inf'] = temp_inf_path
+            
+            # 记录临时目录用于清理
+            temp_files['temp_dir'] = temp_dir
+            
+            logger.debug(f"创建临时文件集合: {temp_files}")
+            return temp_files
+            
         except Exception as e:
-            logger.warning(f"创建临时文件失败: {e}")
+            logger.warning(f"创建临时文件集合失败: {e}")
+            # 清理已创建的文件
+            if 'temp_dir' in locals() and os.path.exists(temp_dir):
+                shutil.rmtree(temp_dir, ignore_errors=True)
             return None
+    
+    def _cleanup_temp_files(self, temp_files: Dict[str, str]) -> None:
+        """清理临时文件"""
+        try:
+            import shutil
+            if 'temp_dir' in temp_files and os.path.exists(temp_files['temp_dir']):
+                shutil.rmtree(temp_files['temp_dir'], ignore_errors=True)
+                logger.debug(f"清理临时目录: {temp_files['temp_dir']}")
+        except Exception as e:
+            logger.warning(f"清理临时文件失败: {e}")
 
     def _manual_parse_comtrade(self, file_info: FileInfo) -> bool:
         """
@@ -1043,31 +1097,76 @@ class ComtradeReader:
         # 获取基础文件名（不含扩展名）
         base_name = file_path.stem
         base_dir = file_path.parent
+        original_suffix = file_path.suffix  # 保留原始后缀（包含大小写信息）
 
-        # 确定CFG和DAT文件路径
-        if file_path.suffix.lower() == '.cfg':
-            cfg_file = str(file_path)
-            dat_file = str(base_dir / f"{base_name}.dat")
-        elif file_path.suffix.lower() == '.dat':
-            cfg_file = str(base_dir / f"{base_name}.cfg")
-            dat_file = str(file_path)
+        if original_suffix.isupper():
+            if file_path.suffix.upper() == '.CFG':
+                cfg_file = str(file_path)
+                # 根据原始后缀大小写决定DAT后缀
+                dat_suffix = '.DAT' if original_suffix.isupper() else '.DAT'
+                dat_file = str(base_dir / f"{base_name}{dat_suffix}")
+            elif file_path.suffix.upper() == '.DAT':
+                # 根据原始后缀大小写决定CFG后缀
+                cfg_suffix = '.CFG' if original_suffix.isupper() else '.CFG'
+                cfg_file = str(base_dir / f"{base_name}{cfg_suffix}")
+                dat_file = str(file_path)
+            else:
+                # 尝试自动检测（默认使用小写）
+                cfg_file = str(base_dir / f"{base_name}.CFG")
+                dat_file = str(base_dir / f"{base_name}.DAT")
+
+            # 检查必需文件是否存在
+            if not Path(cfg_file).exists():
+                logger.error(f"CFG文件不存在: {cfg_file}")
+                return None
+
+            if not Path(dat_file).exists():
+                # 尝试反转大小写再次检查
+                alt_dat_file = str(base_dir / f"{base_name}.DAT") if dat_file.endswith('.dat') else str(
+                    base_dir / f"{base_name}.DAT")
+                if Path(alt_dat_file).exists():
+                    dat_file = alt_dat_file
+                else:
+                    logger.error(f"DAT文件不存在: {dat_file} (也尝试了: {alt_dat_file})")
+                    return None
+
         else:
-            # 尝试自动检测
-            cfg_file = str(base_dir / f"{base_name}.cfg")
-            dat_file = str(base_dir / f"{base_name}.dat")
+            # 确定CFG和DAT文件路径
+            if file_path.suffix.lower() == '.cfg':
+                cfg_file = str(file_path)
+                # 根据原始后缀大小写决定DAT后缀
+                dat_suffix = '.DAT' if original_suffix.isupper() else '.dat'
+                dat_file = str(base_dir / f"{base_name}{dat_suffix}")
+            elif file_path.suffix.lower() == '.dat':
+                # 根据原始后缀大小写决定CFG后缀
+                cfg_suffix = '.CFG' if original_suffix.isupper() else '.cfg'
+                cfg_file = str(base_dir / f"{base_name}{cfg_suffix}")
+                dat_file = str(file_path)
+            else:
+                # 尝试自动检测（默认使用小写）
+                cfg_file = str(base_dir / f"{base_name}.cfg")
+                dat_file = str(base_dir / f"{base_name}.dat")
 
-        # 检查必需文件是否存在
-        if not Path(cfg_file).exists():
-            logger.error(f"CFG文件不存在: {cfg_file}")
-            return None
+            # 检查必需文件是否存在
+            if not Path(cfg_file).exists():
+                logger.error(f"CFG文件不存在: {cfg_file}")
+                return None
 
-        if not Path(dat_file).exists():
-            logger.error(f"DAT文件不存在: {dat_file}")
-            return None
+            if not Path(dat_file).exists():
+                # 尝试反转大小写再次检查
+                alt_dat_file = str(base_dir / f"{base_name}.DAT") if dat_file.endswith('.dat') else str(
+                    base_dir / f"{base_name}.dat")
+                if Path(alt_dat_file).exists():
+                    dat_file = alt_dat_file
+                else:
+                    logger.error(f"DAT文件不存在: {dat_file} (也尝试了: {alt_dat_file})")
+                    return None
 
-        # 检查可选文件
-        hdr_file = str(base_dir / f"{base_name}.hdr")
-        inf_file = str(base_dir / f"{base_name}.inf")
+        # 检查可选文件（保持与主文件相同的大小写风格）
+        hdr_suffix = '.HDR' if original_suffix.isupper() else '.hdr'
+        inf_suffix = '.INF' if original_suffix.isupper() else '.inf'
+        hdr_file = str(base_dir / f"{base_name}{hdr_suffix}")
+        inf_file = str(base_dir / f"{base_name}{inf_suffix}")
 
         if not Path(hdr_file).exists():
             hdr_file = None
