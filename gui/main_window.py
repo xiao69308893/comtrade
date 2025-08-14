@@ -251,7 +251,7 @@ class MainWindow(QMainWindow):
         # 日志标签页
         self.log_widget = QTextEdit()
         self.log_widget.setReadOnly(True)
-        self.log_widget.setMaximumBlockCount(1000)  # 限制日志行数
+        #self.log_widget.setMaximumBlockCount(1000)  # 限制日志行数
         self.tab_widget.addTab(self.log_widget, "运行日志")
 
         self.main_splitter.addWidget(self.tab_widget)
@@ -708,7 +708,7 @@ class MainWindow(QMainWindow):
         <h3>技术栈：</h3>
         <p>Python 3.x • PyQt6 • matplotlib • numpy • scipy</p>
 
-        <p><b>开发时间：</b> 2024年</p>
+        <p><b>开发时间：</b> 2025年</p>
         """
 
         QMessageBox.about(self, "关于", about_text)

@@ -153,7 +153,7 @@ def main():
     """主函数"""
     # 创建应用程序实例
     app = QApplication(sys.argv)
-    app.setAttribute(Qt.ApplicationAttribute.AA_EnableHighDpiScaling)
+    #app.setAttribute(Qt.ApplicationAttribute.AA_NativeWindows)
 
     try:
         # 设置应用程序样式
