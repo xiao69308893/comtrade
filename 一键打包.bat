@@ -40,18 +40,13 @@ echo [2/2] 开始自动打包...
 echo.
 
 REM 如果auto_build.py不存在，创建它
-if not exist auto_build.py (
-    echo 创建自动打包脚本...
-    python -c "exec(open('create_auto_build.py').read())" 2>nul
-    if errorlevel 1 (
-        echo 正在下载打包脚本...
-        REM 这里应该包含auto_build.py的内容
-        REM 由于内容太长，实际使用时需要将上面的auto_build_script内容保存为auto_build.py
-    )
+if not exist auto_builder.py (
+    echo 找不到auto_builder.py文件
+    pause
 )
 
 REM 执行打包
-python auto_build.py
+python auto_builder.py
 
 REM 检查打包结果
 if exist "dist\COMTRADE波形分析器.exe" (

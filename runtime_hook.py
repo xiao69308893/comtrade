@@ -11,7 +11,7 @@ os.environ['PYTHONIOENCODING'] = 'utf-8'
 
 # 设置matplotlib后端
 import matplotlib
-matplotlib.use('Qt5Agg')
+matplotlib.use('Qt6Agg')
 
 # 禁用numpy警告提升性能
 import numpy as np
