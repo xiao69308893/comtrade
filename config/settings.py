@@ -47,8 +47,8 @@ class AnalysisSettings:
 @dataclass
 class UISettings:
     """界面配置"""
-    window_width: int = 1400
-    window_height: int = 900
+    window_width: int = 1920
+    window_height: int = 1080
     splitter_sizes: list = None
     recent_files: list = None
     max_recent_files: int = 10

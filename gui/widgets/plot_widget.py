@@ -20,7 +20,7 @@ from PyQt6.QtWidgets import (
     QCheckBox, QComboBox, QLabel, QSpinBox, QDoubleSpinBox,
     QGroupBox, QSlider, QSplitter, QScrollArea
 )
-from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtCore import Qt, pyqtSignal, QTimer
 
 from models.data_models import ComtradeRecord, ChannelInfo, FaultEvent
 from config.settings import PlotSettings
@@ -386,6 +386,32 @@ class PlotCanvas(FigureCanvas):
             if x is not None and y is not None:
                 # 可以在这里显示十字线或数值提示
                 pass
+    
+    def wheelEvent(self, event):
+        """重写鼠标滚轮事件，将事件传递给父组件的滚动区域"""
+        # 获取父组件中的滚动区域
+        parent = self.parent()
+        while parent:
+            if hasattr(parent, 'scroll_area'):
+                # 找到滚动区域，获取其垂直滚动条
+                v_scrollbar = parent.scroll_area.verticalScrollBar()
+                if v_scrollbar and v_scrollbar.isVisible():
+                    # 根据滚轮方向调整滚动位置
+                    delta = event.angleDelta().y()
+                    current_value = v_scrollbar.value()
+                    # 每次滚动30像素
+                    scroll_step = 30
+                    if delta > 0:  # 向上滚动
+                        new_value = max(0, current_value - scroll_step)
+                    else:  # 向下滚动
+                        new_value = min(v_scrollbar.maximum(), current_value + scroll_step)
+                    v_scrollbar.setValue(new_value)
+                    event.accept()
+                    return
+            parent = parent.parent()
+        
+        # 如果没有找到滚动区域，调用父类的wheelEvent
+        super().wheelEvent(event)
 
     def save_plot(self, file_path: str, dpi: int = 300):
         """保存图形"""
@@ -403,6 +429,52 @@ class PlotCanvas(FigureCanvas):
         # 重新绘制当前图形
         if self.current_record and self.selected_channels:
             self.plot_channels(self.current_record, self.selected_channels)
+    
+    def recalculate_size(self):
+        """重新计算并调整图表尺寸"""
+        if not self.current_record or not self.selected_channels:
+            return
+            
+        analog_indices = self.selected_channels.get('analog', [])
+        digital_indices = self.selected_channels.get('digital', [])
+        
+        if not analog_indices and not digital_indices:
+            return
+            
+        # 计算子图数量
+        n_analog = len(analog_indices)
+        n_digital = 1 if digital_indices else 0
+        total_subplots = n_analog + n_digital
+        
+        if total_subplots == 0:
+            return
+            
+        # 获取当前窗口尺寸并重新计算图表尺寸
+        widget_height = self.parent().height() if self.parent() else 600
+        widget_width = self.parent().width() if self.parent() else 800
+        
+        # 重新计算高度
+        min_height_per_subplot = max(1.5, (widget_height / 5) * 0.8 / 100)
+        title_height = 0.5
+        total_height = total_subplots * min_height_per_subplot + title_height
+        
+        # 重新计算宽度
+        figure_width = max(6, (widget_width) / 100)
+        
+        # 更新figure尺寸
+        self.figure.set_size_inches(figure_width, total_height)
+        
+        # 更新canvas尺寸
+        dpi = self.figure.get_dpi()
+        canvas_width = int(figure_width * dpi)
+        canvas_height = int(total_height * dpi)
+        self.setFixedSize(canvas_width, canvas_height)
+        
+        # 重新调整布局并绘制
+        self.figure.tight_layout()
+        self.draw()
+        
+        logger.debug(f"图表尺寸已重新计算: {canvas_width}x{canvas_height}")
 
 
 class PlotControlPanel(QWidget):
@@ -574,20 +646,21 @@ class PlotWidget(QWidget):
         
         # 导航工具栏
         self.toolbar = NavigationToolbar(self.canvas, self)
+        self.toolbar.setObjectName('plotNavigationToolbar')  # 设置objectName以避免saveState警告
         plot_layout.addWidget(self.toolbar)
         
         # 创建滚动区域
-        scroll_area = QScrollArea()
-        scroll_area.setWidget(self.canvas)
-        scroll_area.setWidgetResizable(False)  # 设置为False以允许canvas超出滚动区域
-        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # 禁用水平滚动条
-        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.scroll_area = QScrollArea()
+        self.scroll_area.setWidget(self.canvas)
+        self.scroll_area.setWidgetResizable(False)  # 设置为False以允许canvas超出滚动区域
+        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # 禁用水平滚动条
+        self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         # 设置最小尺寸确保滚动区域有固定大小
-        scroll_area.setMinimumSize(400, 300)
+        self.scroll_area.setMinimumSize(400, 300)
         
-        # 启用鼠标滚轮支持
-        scroll_area.wheelEvent = self._handle_wheel_event
-        plot_layout.addWidget(scroll_area)
+        # 确保滚动区域可以接收焦点和鼠标事件
+        self.scroll_area.setFocusPolicy(Qt.FocusPolicy.WheelFocus)
+        plot_layout.addWidget(self.scroll_area)
 
         splitter.addWidget(plot_widget)
 
@@ -599,25 +672,7 @@ class PlotWidget(QWidget):
         # 设置分割器比例
         splitter.setSizes([800, 250])
 
-    def _handle_wheel_event(self, event):
-        """处理鼠标滚轮事件，支持垂直滚动"""
-        # 获取滚动区域的垂直滚动条
-        scroll_area = self.sender()
-        if scroll_area and hasattr(scroll_area, 'verticalScrollBar'):
-            v_scrollbar = scroll_area.verticalScrollBar()
-            # 根据滚轮方向调整滚动位置
-            delta = event.angleDelta().y()
-            current_value = v_scrollbar.value()
-            # 每次滚动30像素
-            scroll_step = 30
-            if delta > 0:  # 向上滚动
-                new_value = max(0, current_value - scroll_step)
-            else:  # 向下滚动
-                new_value = min(v_scrollbar.maximum(), current_value + scroll_step)
-            v_scrollbar.setValue(new_value)
-        
-        # 接受事件，防止传递给父组件
-        event.accept()
+
 
     def plot_channels(self, record: ComtradeRecord, selected_channels: Dict[str, List[int]]):
         """绘制通道"""
@@ -657,3 +712,24 @@ class PlotWidget(QWidget):
         else:
             # 清除高亮
             self.canvas.highlight_fault_events([])
+    
+    def resizeEvent(self, event):
+        """窗口大小调整事件处理"""
+        super().resizeEvent(event)
+        
+        # 延迟重新计算图表尺寸，避免频繁调整
+        if hasattr(self, 'canvas') and self.canvas.current_record:
+            # 使用QTimer延迟执行，避免在窗口调整过程中频繁重绘
+            if not hasattr(self, '_resize_timer'):
+                self._resize_timer = QTimer()
+                self._resize_timer.setSingleShot(True)
+                self._resize_timer.timeout.connect(self._on_resize_timeout)
+            
+            self._resize_timer.stop()
+            self._resize_timer.start(200)  # 200ms延迟
+    
+    def _on_resize_timeout(self):
+        """窗口大小调整延迟处理"""
+        if hasattr(self, 'canvas'):
+            self.canvas.recalculate_size()
+            logger.debug("窗口大小调整完成，图表已重新计算尺寸")

@@ -396,6 +396,7 @@ class MainWindow(QMainWindow):
     def setup_tool_bar(self):
         """设置工具栏"""
         self.tool_bar = QToolBar('主工具栏')
+        self.tool_bar.setObjectName('mainToolBar')  # 设置objectName以避免saveState警告
         self.tool_bar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
         self.addToolBar(self.tool_bar)
 
